@@ -1,141 +1,191 @@
 ;; Definición de instancias
 
 ;; Definición de las tematicas
-(make-instance Tragedia of Tematica
-    (Nombre "Tragedia"))
-    
-(make-instance Retrato of Tematica
-    (Nombre "Retrato"))
-
-(make-instance Historico of Tematica
-    (Nombre "Histórico"))
+(definstances tematicas
+    (Tragedia of Tematica
+        (Nombre "Tragedia")
+        (Tematica_Cuadro [LaBalsadelaMedusa]))
+    (Retrato of Tematica
+        (Nombre "Retrato")
+        (Tematica_Cuadro [LaGioconda, RetratoDeUnaJoven]))
+    (Historico of Tematica
+        (Nombre "Histórico")
+        (Tematica_Cuadro [LasBodas, LaCoronacionDeNapoleon, LaLibertadGuiandoAlPueblo, LosCaballosDeMarly, ElLeonDeMonzon, GabrielleDeEstreesYSuHermanas, ElBanoTurco, LaMomia, LaVictoriaDeSamotracia, LaVenusDeMilo, ElEsclavoMoribundo, LaEncajera, ElTahur, LosTorosAlados, ElEscribaSentado, LasAves]))
+)
 
 ;; Definición de las epocas
-(make-instance SigloXIX of Epoca
-    (Nombre "Siglo XIX"))
-
-(make-instance SigloXV of Epoca
-    (Nombre "Siglo XV"))
-
-(make-instance SigloXVI of Epoca
-    (Nombre "Siglo XVI"))
-    
-(make-instance SigloXVII of Epoca
-    (Nombre "Siglo XVII"))
-    
-(make-instance SigloXVIII of Epoca
-    (Nombre "Siglo XVIII"))
-    
-(make-instance SigloXII of Epoca
-    (Nombre "Siglo XII"))
-    
-(make-instance SigloXX of Epoca
-    (Nombre "Siglo XX"))
-    
-(make-instance SigloIIaC of Epoca
-    (Nombre "Siglo II a.C"))
-    
-(make-instance SigloIXaC of Epoca
-    (Nombre "Siglo IX a.C"))
-    
-(make-instance SigloXXVIaC of Epoca
-    (Nombre "Siglo XXVI a.C"))
+(definstances epocas
+    (SigloXIX of Epoca
+        (Nombre "Siglo XIX")
+        (Epoca_Pintor [TheodoreGericault, EugeneDelacroix, JacquesLouisDavid])
+        (Epoca_Cuadro [LaBalsadelaMedusa, LaLibertadGuiandoAlPueblo, LaCoronacionDeNapoleon]))
+    (SigloXV of Epoca 
+        (Nombre "Siglo XV")
+        (Epoca_Pintor [LeonardoDaVinci, SandroBotticelli])
+        (Epoca_Cuadro [LaGioconda, RetratoDeUnaJoven]))
+    (SigloXVI of Epoca
+        (Nombre "Siglo XVI")
+        (Epoca_Pintor [PaoloVeronese, SandroBotticelli, MiguelAngelBuonarroti])
+        (Epoca_Cuadro [LasBodasDeCana, RetratoDeUnaJoven, ElEsclavoMoribundo]))
+    (SigloXVII of Epoca
+        (Nombre "Siglo XVII")
+        (Epoca_Pintor [JohannesVermeer, GeorgesdeLaTour])
+        (Epoca_Cuadro [LaEncajera, ElTahur]))
+    (SigloXVIII of Epoca
+        (Nombre "Siglo XVIII")
+        (Epoca_Pintor [GuillaumeCoustou])
+        (Epoca_Cuadro [LosCaballosDeMarly]))
+    (SigloXII of Epoca
+        (Nombre "Siglo XII")
+        (Epoca_Cuadro [ElLeonDeMonzon])
+        (Epoca_Pintor [Desconocido]))
+    (SigloXX of Epoca
+        (Nombre "Siglo XX")
+        (Epoca_Pintor [GeorgesBraque])
+        (Epoca_Cuadro [LasAves]))
+    (SigloIIaC of Epoca
+        (Nombre "Siglo II a.C")
+        (Epoca_Pintor [Desconocido])
+        (Epoca_Cuadro [LaVictoria, LaVenusDeMilo, LaMomia])) 
+    (SigloIXaC of Epoca
+        (Nombre "Siglo IX a.C")
+        (Epoca_Pintor [Desconocido])
+        (Epoca_Cuadro [LosTorosAlados]))
+    (SigloXXVIaC of Epoca
+        (Nombre "Siglo XXVI a.C")
+        (Epoca_Pintor [Desconocido])
+        (Epoca_Cuadro [ElEscribaSentado]))
+)
 
 ;; Definición de los estilos
-(make-instance Romanticismo of Estilo
-    (Nombre "Romanticismo"))
-
-(make-instance Renacimiento of Estilo
-    (Nombre "Renacimiento"))
-
-(make-instance Renacentista of Estilo
-    (Nombre "Renacentista"))
-
-(make-instance GriegoHelenistico of Estilo
-    (Nombre "Griego Helenístico"))
-    
-(make-instance Neoclasicismo of Estilo
-    (Nombre "Neoclasicismo"))
-    
-(make-instance Barroco of Estilo
-    (Nombre "Barroco"))
-    
-(make-instance Gotico of Estilo
-    (Nombre "Gótico"))
-    
-(make-instance Asirio of Estilo
-    (Nombre "Asirio"))
-    
-(make-instance Egipcio of Estilo
-    (Nombre "Egipcio"))
-    
-(make-instance Expresionismo of Estilo
-    (Nombre "Expresionismo"))
-
+(definstances estilos
+    (Romanticismo of Estilo
+        (Nombre "Romanticismo")
+        (Estilo_Pintor [TheodoreGericault, EugeneDelacroix])
+        (Estilo_Cuadro [LaBalsadelaMedusa, LaLibertadGuiandoAlPueblo]))
+    (Renacimiento of Estilo
+        (Nombre "Renacimiento")
+        (Estilo_Pintor [LeonardoDaVinci, PaoloVeronese, SandroBotticelli, MiguelAngelBuonarroti])
+        (Estilo_Cuadro [LaGioconda, LasBodasDeCana, RetratoDeUnaJoven, ElEsclavoMoribundo]))
+    (Renacentista of Estilo
+        (Nombre "Renacentista")
+        (Estilo_Pintor [SandroBotticelli])
+        (Estilo_Cuadro [RetratoDeUnaJoven]))
+    (GriegoHelenistico of Estilo
+        (Nombre "Griego Helenístico")
+        (Estilo_Cuadro [LasBodasDeCana, LaVenusDeMilo, LaVictoriaDeSamotracia])
+        (Estilo_Pintor [PaoloVeronese, Desconocido]))
+    (Neoclasicismo of Estilo
+        (Nombre "Neoclasicismo")
+        (Estilo_Pintor [JacquesLouisDavid, JeanAugusteDominiqueIngres])
+        (Estilo_Cuadro [LaCoronacionDeNapoleon, ElBanoTurco]))
+    (Barroco of Estilo
+        (Nombre "Barroco")
+        (Estilo_Pintor [GuillaumeCoustou, JohannesVermeer, GeorgesdeLaTour])
+        (Estilo_Cuadro [LosCaballosDeMarly, ElTahur, LaEncajera]))
+    (Gotico of Estilo
+        (Nombre "Gótico")
+        (Estilo_Cuadro [ElLeonDeMonzon])
+        (Estilo_Pintor [Desconocido]))
+    (Asirio of Estilo
+        (Nombre "Asirio")
+        (Estilo_Cuadro [LosTorosAlados])
+        (Estilo_Pintor [Desconocido]))
+    (Egipcio of Estilo
+        (Nombre "Egipcio")
+        (Estilo_Cuadro [ElEscribaSentado, LaMomia])
+        (Estilo_Pintor [Desconocido]))
+    (Expresionismo of Estilo
+        (Nombre "Expresionismo")
+        (Estilo_Cuadro [LasAves])
+        (Estilo_Pintor [GeorgesBraque]))
+)
 
 ;; Definición de los pintores
-(make-instance TheodoreGericault of Pintor
-    (Nombre "Géricault")
-    (Pintor_Estilo (create$ Romanticismo))
-    (Pintor_Epoca (create$ SigloXIX)))
-
-(make-instance LeonardoDaVinci of Pintor
-    (Nombre "Leonardo Da Vinci")
-    (Pintor_Estilo (create$ Renacimiento))
-    (Pintor_Epoca (create$ SigloXV)))
-
-(make-instance PaoloVeronese of Pintor
-    (Nombre "Paolo Veronese")
-    (Pintor_Estilo (create$ Renacimiento))
-    (Pintor_Epoca (create$ SigloXV)))
-
-(make-instance JacquesLouisDavid of Pintor
-    (Nombre "Jacques-Louis David")
-    (Pintor_Estilo (create$ Neoclasicismo))
-    (Pintor_Epoca (create$ SigloXIX)))
-
-(make-instance EugeneDelacroix of Pintor
-    (Nombre "Eugène Delacroix")
-    (Pintor_Estilo (create$ Romanticismo))
-    (Pintor_Epoca (create$ SigloXIX)))
-
-(make-instance GuillaumeCoustou of Pintor
-    (Nombre "Guillaume Coustou")
-    (Pintor_Estilo (create$ Barroco))
-    (Pintor_Epoca (create$ SigloXVIII)))
-
-(make-instance SandroBotticelli of Pintor
-    (Nombre "Sandro Botticelli")
-    (Pintor_Estilo (create$ Renacentista))
-    (Pintor_Epoca (create$ SigloXV)))
-
-(make-instance MiguelAngelBuonarroti of Pintor
-    (Nombre "Miguel Ángel Buonarroti")
-    (Pintor_Estilo (create$ Renacentista))
-    (Pintor_Epoca (create$ SigloXVI)))
-
-(make-instance JohannesVermeer of Pintor
-    (Nombre "Johannes Vermeer")
-    (Pintor_Estilo (create$ Barroco))
-    (Pintor_Epoca (create$ SigloXVII)))
-
-(make-instance JeanAugusteDominiqueIngres of Pintor
-    (Nombre "Jean-Auguste-Dominique Ingres")
-    (Pintor_Estilo (create$ Neoclasicismo))
-    (Pintor_Epoca (create$ SigloXIX)))
-
-(make-instance GeorgesdeLaTour of Pintor
-    (Nombre "Georges de La Tour")
-    (Pintor_Estilo (create$ Barroco))
-    (Pintor_Epoca (create$ SigloXVII)))
-
-(make-instance GeorgesBraque of Pintor
-    (Nombre "Georges Braque")
-    (Pintor_Estilo (create$ Expresionismo))
-    (Pintor_Epoca (create$ SigloXX)))
+(definstances pintores
+    (TheodoreGericault of Pintor 
+        (Nombre "Géricault")
+        (Pintor_Estilo [Romanticismo])
+        (Pintor_Epoca [SigloXIX])
+        (Pintor_Cuadro [LaBalsadelaMedusa]))
+        (Nacionalidad "Frances")
+    (LeonardoDaVinci of Pintor
+        (Nombre "Leonardo Da Vinci")
+        (Pintor_Estilo [Renacimiento])
+        (Pintor_Epoca [SigloXV])
+        (Pintor_Cuadro [LaGioconda])
+        (Nacionalidad "Italiano"))
+    (PaoloVeronese of Pintor
+        (Nombre "Paolo Veronese")
+        (Pintor_Estilo [Renacimiento])
+        (Pintor_Epoca [SigloXVI])
+        (Pintor_Cuadro [LasBodasDeCana])
+        (Nacionalidad "Italiano"))
+    (JacquesLouisDavid of Pintor
+        (Nombre "Jacques-Louis David")
+        (Pintor_Estilo [Neoclasicismo])
+        (Pintor_Epoca [SigloXIX])
+        (Pintor_Cuadro [LaCoronacionDeNapoleon])
+        (Nacionalidad "Frances"))
+    (EugeneDelacroix of Pintor
+        (Nombre "Eugène Delacroix")
+        (Pintor_Estilo [Romanticismo])
+        (Pintor_Epoca [SigloXIX])
+        (Pintor_Cuadro [LaLibertadGuiandoAlPueblo])
+        (Nacionalidad "Frances"))
+    (GuillaumeCoustou of Pintor
+        (Nombre "Guillaume Coustou")
+        (Pintor_Estilo [Barroco])
+        (Pintor_Epoca [SigloXVIII])
+        (Pintor_Cuadro [LosCaballosDeMarly, LosTorosAlados])
+        (Nacionalidad "Frances"))
+    (SandroBotticelli of Pintor
+        (Nombre "Sandro Botticelli")
+        (Pintor_Estilo [Renacentista])
+        (Pintor_Epoca [SigloXV])
+        (Pintor_Cuadro [RetratoDeUnaJoven])
+        (Nacionalidad "Italiano"))
+    (MiguelAngelBuonarroti of Pintor
+        (Nombre "Miguel Ángel Buonar")
+        (Pintor_Estilo [Renacentista])
+        (Pintor_Epoca [SigloXVI])
+        (Pintor_Cuadro [ElEsclavoMoribundo])
+        (Nacionalidad "Italiano"))
+    (JohannesVermeer of Pintor
+        (Nombre "Johannes Vermeer")
+        (Pintor_Estilo [Barroco])
+        (Pintor_Epoca [SigloXVII])
+        (Pintor_Cuadro [LaEncajera])
+        (Nacionalidad "Holandes"))
+    (JeanAugusteDominiqueIngres of Pintor
+        (Nombre "Jean-Auguste-Dominique Ingres")
+        (Pintor_Estilo [Neoclasicismo])
+        (Pintor_Epoca [SigloXIX])
+        (Pintor_Cuadro [ElBanoTurco])
+        (Nacionalidad "Frances"))
+    (GeorgesdeLaTour of Pintor
+        (Nombre "Georges de La Tour")
+        (Pintor_Estilo [Barroco])
+        (Pintor_Epoca [SigloXVII])
+        (Pintor_Cuadro [ElTahur])
+        (Nacionalidad "Frances"))
+    (GeorgesBraque of Pintor
+        (Nombre "Georges Braque")
+        (Pintor_Estilo [Expresionismo])
+        (Pintor_Epoca [SigloXX])
+        (Pintor_Cuadro [LasAves])
+        (Nacionalidad "Frances"))
+    (Desconocido of Pintor
+        (Nombre "Desconocido")
+        (Pintor_Estilo [GriegoHelenistico, Egipcio])
+        (Pintor_Epoca [SigloIIaC, SigloIXaC, SigloXXVIaC])
+        (Pintor_Cuadro [LaVictoriaDeSamotracia, LaVenusDeMilo, ElLeonDeMonzon, LaMomia, ElEscribaSentado, GabrielleDeEstreesYSuHermanas])
+        (Nacionalidad "Desconocido"))
+)
 
 ;; Definición de los cuadros y estatuas
 ;Cuadro
+
 (make-instance LaBalsadelaMedusa of Cuadro
     (Titulo "La Balsa de la Medusa")
     (Dimensiones "491 x 716 cm")
@@ -143,10 +193,10 @@
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Tragedia))
-    (Cuadro_Epoca (create$ SigloXIX)) 
-    (Cuadro_Estilo (create$ Romanticismo))
-    (Cuadro_Pintor TheodoreGericault))
+    (Cuadro_Tematica [Tragedia])
+    (Cuadro_Epoca [SigloXIX]) 
+    (Cuadro_Estilo [Romanticismo])
+    (Cuadro_Pintor [TheodoreGericault]))
 
 ;Cuadro
 (make-instance LaGioconda of Cuadro
@@ -156,10 +206,10 @@
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Retrato))
-    (Cuadro_Epoca (create$ SigloXV)) 
-    (Cuadro_Estilo (create$ Renacimiento))
-    (Cuadro_Pintor LeonardoDaVinci))
+    (Cuadro_Tematica [Retrato])
+    (Cuadro_Epoca [SigloXV]) 
+    (Cuadro_Estilo [Renacimiento])
+    (Cuadro_Pintor [LeonardoDaVinci]))
 
 ;Cuadro
 (make-instance LasBodasDeCana of Cuadro 
@@ -169,23 +219,23 @@
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Historico))
-    (Cuadro_Epoca (create$ SigloXVI)) 
-    (Cuadro_Estilo (create$ GriegoHelenistico))
-    (Cuadro_Pintor PaoloVeronese))
+    (Cuadro_Tematica [Historico])
+    (Cuadro_Epoca [SigloXVI]) 
+    (Cuadro_Estilo [GriegoHelenistico])
+    (Cuadro_Pintor [PaoloVeronese]))
 
 ;Estatua
 (make-instance LaVictoriaDeSamotracia of Cuadro 
     (Titulo "La Victoria de Samotracia")
     (Dimensiones "244 cm")
-    (Anyo -190) ;- == a.C
+    (Anyo 190 a.C)
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Historico))
-    (Cuadro_Epoca (create$ SigloIIaC)) 
-    (Cuadro_Estilo (create$ GriegoHelenistico))
-    (Cuadro_Pintor Desconocido))
+    (Cuadro_Tematica [Historico])
+    (Cuadro_Epoca [SigloIIaC]) 
+    (Cuadro_Estilo [GriegoHelenistico])
+    (Cuadro_Pintor [Desconocido]))
 
 ;Estatua
 (make-instance LaVenusDeMilo of Cuadro 
@@ -195,10 +245,10 @@
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Historico))
-    (Cuadro_Epoca (create$ SigloIIaC)) 
-    (Cuadro_Estilo (create$ GriegoHelenistico))
-    (Cuadro_Pintor Desconocido))
+    (Cuadro_Tematica [Historico])
+    (Cuadro_Epoca [SigloIIaC]) 
+    (Cuadro_Estilo [GriegoHelenistico])
+    (Cuadro_Pintor [Desconocido]))
 
 ;Cuadro
 (make-instance LaCoronacionDeNapoleon of Cuadro 
@@ -208,10 +258,10 @@
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Historico))
-    (Cuadro_Epoca (create$ SigloXIX)) 
-    (Cuadro_Estilo (create$ Neoclasicsmo))
-    (Cuadro_Pintor JacquesLouisDavid))
+    (Cuadro_Tematica [Historico])
+    (Cuadro_Epoca [SigloXIX]) 
+    (Cuadro_Estilo [Neoclasicsmo])
+    (Cuadro_Pintor [JacquesLouisDavid]))
 
 ;Cuadro
 (make-instance LaLibertadGuiandoAlPueblo of Cuadro
@@ -221,10 +271,10 @@
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Historico)) ;Falta definir las tematicas
-    (Cuadro_Epoca (create$ SigloXIX)) 
-    (Cuadro_Estilo (create$ Romanticismo))
-    (Cuadro_Pintor EugeneDelacroix))
+    (Cuadro_Tematica [Historico]) ;Falta definir las tematicas
+    (Cuadro_Epoca [SigloXIX]) 
+    (Cuadro_Estilo [Romanticismo])
+    (Cuadro_Pintor [EugeneDelacroix]))
 
 ;Estatua
 (make-instance LosCaballosDeMarly of Cuadro
@@ -234,10 +284,10 @@
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Historico)) ;Falta definir las tematicas
-    (Cuadro_Epoca (create$ SigloXVIII)) 
-    (Cuadro_Estilo (create$ Barroco))
-    (Cuadro_Pintor GuillaumeCoustou))
+    (Cuadro_Tematica [Historico]) ;Falta definir las tematicas
+    (Cuadro_Epoca [SigloXVIII]) 
+    (Cuadro_Estilo [Barroco])
+    (Cuadro_Pintor [GuillaumeCoustou]))
 
 ;Estatua
 (make-instance ElLeonDeMonzon of Cuadro
@@ -247,10 +297,10 @@
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Historico)) ;Falta definir las tematicas
-    (Cuadro_Epoca (create$ SigloXII))
-    (Cuadro_Estilo (create$ Gotico))
-    (Cuadro_Pintor Desconocido))
+    (Cuadro_Tematica [Historico]) ;Falta definir las tematicas
+    (Cuadro_Epoca [SigloXII])
+    (Cuadro_Estilo [Gotico])
+    (Cuadro_Pintor [Desconocido]))
 
 ;Cuadro
 (make-instance RetratoDeUnaJoven of Cuadro
@@ -260,10 +310,10 @@
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Retrato))
-    (Cuadro_Epoca (create$ SigloXV)) 
-    (Cuadro_Estilo (create$ Renacentista))
-    (Cuadro_Pintor SandroBotticelli))
+    (Cuadro_Tematica [Retrato])
+    (Cuadro_Epoca [SigloXV]) 
+    (Cuadro_Estilo [Renacentista])
+    (Cuadro_Pintor [SandroBotticelli]))
 
 ;Estatua
 (make-instance LosTorosAlados of Cuadro
@@ -273,10 +323,10 @@
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Historico)) ;Falta definir las tematicas
-    (Cuadro_Epoca (create$ SigloIXaC)) 
-    (Cuadro_Estilo (create$ Asirio))
-    (Cuadro_Pintor GuillaumeCoustou))
+    (Cuadro_Tematica [Historico]) ;Falta definir las tematicas
+    (Cuadro_Epoca [SigloIXaC]) 
+    (Cuadro_Estilo [Asirio])
+    (Cuadro_Pintor [Desconocido]))
 
 ;Estatua
 (make-instance ElEsclavoMoribundo of Cuadro
@@ -286,23 +336,23 @@
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Historico)) ;Falta definir las tematicas
-    (Cuadro_Epoca (create$ SigloXVI)) 
-    (Cuadro_Estilo (create$ Renacentista))
-    (Cuadro_Pintor MiguelAngelBuonarroti))
+    (Cuadro_Tematica [Historico]) ;Falta definir las tematicas
+    (Cuadro_Epoca [SigloXVI]) 
+    (Cuadro_Estilo [Renacentista])
+    (Cuadro_Pintor [MiguelAngelBuonarroti]))
 
 ;Estatua
 (make-instance ElEscribaSentado of Cuadro
     (Titulo "El Escriba Sentado")
     (Dimensiones "53.7 cm")
-    (Anyo -2600) ;- == a.C
+    (Anyo 2600 a.C)
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Historico)) ;Falta definir las tematicas
-    (Cuadro_Epoca (create$ SigloXXVIaC)) 
-    (Cuadro_Estilo (create$ Egipcio))
-    (Cuadro_Pintor Desconocido))
+    (Cuadro_Tematica [Historico]) ;Falta definir las tematicas
+    (Cuadro_Epoca [SigloXXVIaC]) 
+    (Cuadro_Estilo [Egipcio])
+    (Cuadro_Pintor [Desconocido]))
 
 (make-instance LaEncajera of Cuadro
     (Titulo "La Encajera")
@@ -311,10 +361,10 @@
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Historico)) ;Falta definir las tematicas
-    (Cuadro_Epoca (create$ SigloXVII)) 
-    (Cuadro_Estilo (create$ Barroco))
-    (Cuadro_Pintor JohannesVermeer))
+    (Cuadro_Tematica [Historico]) ;Falta definir las tematicas
+    (Cuadro_Epoca [SigloXVII]) 
+    (Cuadro_Estilo [Barroco])
+    (Cuadro_Pintor [JohannesVermeer]))
 
 (make-instance GabrielleDeEstreesYSuHermanas of Cuadro
     (Titulo "Gabrielle d'Estrees y su hermana")
@@ -323,10 +373,10 @@
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Historico)) ;Falta definir las tematicas
-    (Cuadro_Epoca (create$ SigloXVI)) 
-    (Cuadro_Estilo (create$ Renacentista))
-    (Cuadro_Pintor Desconocido))
+    (Cuadro_Tematica [Historico]) ;Falta definir las tematicas
+    (Cuadro_Epoca [SigloXVI]) 
+    (Cuadro_Estilo [Renacentista])
+    (Cuadro_Pintor [Desconocido]))
 
 (make-instance ElBanoTurco of Cuadro
     (Titulo "El baño turco")
@@ -335,10 +385,10 @@
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Historico)) ;Falta definir las tematicas
-    (Cuadro_Epoca (create$ SigloXIX)) 
-    (Cuadro_Estilo (create$ Neoclasicismo))
-    (Cuadro_Pintor JeanAugusteDominiqueIngres))
+    (Cuadro_Tematica [Historico]) ;Falta definir las tematicas
+    (Cuadro_Epoca [SigloXIX]) 
+    (Cuadro_Estilo [Neoclasicismo])
+    (Cuadro_Pintor [JeanAugusteDominiqueIngres]))
 
 (make-instance ElTahur of Cuadro
     (Titulo "El tahúr")
@@ -347,32 +397,31 @@
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Historico)) ;Falta definir las tematicas
-    (Cuadro_Epoca (create$ SigloXVII)) 
-    (Cuadro_Estilo (create$ Barroco))
-    (Cuadro_Pintor GeorgesdeLaTour))
+    (Cuadro_Tematica [Historico]) ;Falta definir las tematicas
+    (Cuadro_Epoca [SigloXVII]) 
+    (Cuadro_Estilo [Barroco])
+    (Cuadro_Pintor [GeorgesdeLaTour]))
 
 (make-instance LaMomia of Cuadro
     (Titulo "La momia")
     (Dimensiones "160 cm") ;No se
-    (Anyo -1550) ; - == a.C
+    (Anyo 1550 a.C)
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Historico)) ;Falta definir las tematicas
-    (Cuadro_Epoca (create$ SigloIIaC)) 
-    (Cuadro_Estilo (create$ Egipcio))
-    (Cuadro_Pintor Desconocido))
+    (Cuadro_Tematica [Historico]) ;Falta definir las tematicas
+    (Cuadro_Epoca [SigloIIaC]) 
+    (Cuadro_Estilo [Egipcio])
+    (Cuadro_Pintor [Desconocido]))
 
-(make-instance TheBirds of Cuadro
+(make-instance LasAves of Cuadro
     (Titulo "The Birds")
     (Dimensiones "501 x 347 cm") ;No se
     (Anyo 1953)
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
-    (Cuadro_Tematica (create$ Historico)) ;Falta definir las tematicas
-    (Cuadro_Epoca (create$ SigloXX)) 
-    (Cuadro_Estilo (create$ Expresionismo))
-    (Cuadro_Pintor GeorgesBraque))
-
+    (Cuadro_Tematica [Historico]) ;Falta definir las tematicas
+    (Cuadro_Epoca [SigloXX]) 
+    (Cuadro_Estilo [Expresionismo])
+    (Cuadro_Pintor [GeorgesBraque]))
