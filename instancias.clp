@@ -178,7 +178,7 @@
 (make-instance LaVictoriaDeSamotracia of Cuadro 
     (Titulo "La Victoria de Samotracia")
     (Dimensiones "244 cm")
-    (Anyo 190 a.C)
+    (Anyo -190) ;- == a.C
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
@@ -295,7 +295,7 @@
 (make-instance ElEscribaSentado of Cuadro
     (Titulo "El Escriba Sentado")
     (Dimensiones "53.7 cm")
-    (Anyo 2600 a.C)
+    (Anyo -2600) ;- == a.C
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
@@ -355,7 +355,7 @@
 (make-instance LaMomia of Cuadro
     (Titulo "La momia")
     (Dimensiones "160 cm") ;No se
-    (Anyo 1550 a.C)
+    (Anyo -1550) ; - == a.C
     (Complejidad 5) ;Falta definir el rango de complejidad
     (Relevancia 3) ;Falta definir la relevancia de los cuadtros
     (Sala 1) ;Falta definir en que sala estan
