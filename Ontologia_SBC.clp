@@ -2,7 +2,7 @@
 ;;; Ontologia_SBC.clp
 ;;; Translated by owl2clips
 ;;; Translated to CLIPS from ontology Ontologia_SBC.ttl
-;;; :Date 04/12/2024 10:47:17
+;;; :Date 04/12/2024 15:57:12
 
 (defclass Epoca
     (is-a USER)
@@ -38,25 +38,25 @@
     (slot obra_tiene_tematica
         (type INSTANCE)
         (create-accessor read-write))
-    (multislot Complejidad
+    (slot Complejidad
         (type SYMBOL)
         (create-accessor read-write))
-    (multislot Data_creacion
+    (slot Data_creacion
         (type SYMBOL)
         (create-accessor read-write))
-    (multislot Dimensiones_alto
+    (slot Dimensiones_alto
         (type FLOAT)
         (create-accessor read-write))
-    (multislot Dimensiones_largo
+    (slot Dimensiones_largo
         (type FLOAT)
         (create-accessor read-write))
-    (multislot Importancia
+    (slot Importancia
         (type SYMBOL)
         (create-accessor read-write))
-    (multislot Nombre
+    (slot Nombre
         (type STRING)
         (create-accessor read-write))
-    (multislot Sala
+    (slot Sala
         (type INTEGER)
         (create-accessor read-write))
 )
@@ -68,10 +68,10 @@
     (multislot pintor_tiene_obra
         (type INSTANCE)
         (create-accessor read-write))
-    (multislot Nacionalidad
+    (slot Nacionalidad
         (type STRING)
         (create-accessor read-write))
-    (multislot Nombre
+    (slot Nombre
         (type STRING)
         (create-accessor read-write))
 )
@@ -110,19 +110,19 @@
     (multislot vista_tiene_preferencia
         (type INSTANCE)
         (create-accessor read-write))
-    (multislot Conocimiento_visita
+    (slot Conocimiento_visita
         (type SYMBOL)
         (create-accessor read-write))
-    (multislot Duracion_visita
+    (slot Duracion_visita
         (type INTEGER)
         (create-accessor read-write))
-    (multislot Hay_peques_visita
+    (slot Hay_peques_visita
         (type SYMBOL)
         (create-accessor read-write))
-    (multislot Ndias_visita
+    (slot Ndias_visita
         (type INTEGER)
         (create-accessor read-write))
-    (multislot Npersonas_visita
+    (slot Npersonas_visita
         (type INTEGER)
         (create-accessor read-write))
 )
