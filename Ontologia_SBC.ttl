@@ -16,7 +16,6 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#epoca_tiene_obra
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#epoca_tiene_obra> rdf:type owl:ObjectProperty ;
                                                                                                     rdfs:subPropertyOf owl:topObjectProperty ;
-                                                                                                    rdf:type owl:ReflexiveProperty ;
                                                                                                     rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Epoca> ;
                                                                                                     rdfs:range <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Obra> .
 
@@ -24,7 +23,6 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> rdf:type owl:ObjectProperty ;
                                                                                                      rdfs:subPropertyOf owl:topObjectProperty ;
-                                                                                                     rdf:type owl:ReflexiveProperty ;
                                                                                                      rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Estilo> ;
                                                                                                      rdfs:range <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Obra> .
 
@@ -32,6 +30,7 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_epoca
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_epoca> rdf:type owl:ObjectProperty ;
                                                                                                     rdfs:subPropertyOf owl:topObjectProperty ;
+                                                                                                    rdf:type owl:FunctionalProperty ;
                                                                                                     rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Obra> ;
                                                                                                     rdfs:range <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Epoca> .
 
@@ -39,6 +38,7 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_estilo
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_estilo> rdf:type owl:ObjectProperty ;
                                                                                                      rdfs:subPropertyOf owl:topObjectProperty ;
+                                                                                                     rdf:type owl:FunctionalProperty ;
                                                                                                      rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Obra> ;
                                                                                                      rdfs:range <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Estilo> .
 
@@ -54,6 +54,7 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_tematica
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_tematica> rdf:type owl:ObjectProperty ;
                                                                                                        rdfs:subPropertyOf owl:topObjectProperty ;
+                                                                                                       rdf:type owl:FunctionalProperty ;
                                                                                                        rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Obra> ;
                                                                                                        rdfs:range <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> .
 
@@ -115,6 +116,7 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Complejidad
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Complejidad> rdf:type owl:DatatypeProperty ;
                                                                                                rdfs:subPropertyOf owl:topDataProperty ;
+                                                                                               rdf:type owl:FunctionalProperty ;
                                                                                                rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Obra> ;
                                                                                                rdfs:range [ rdf:type rdfs:Datatype ;
                                                                                                             owl:oneOf [ rdf:type rdf:List ;
@@ -133,6 +135,7 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Conocimiento_visita
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Conocimiento_visita> rdf:type owl:DatatypeProperty ;
                                                                                                        rdfs:subPropertyOf owl:topDataProperty ;
+                                                                                                       rdf:type owl:FunctionalProperty ;
                                                                                                        rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Visita> ;
                                                                                                        rdfs:range [ rdf:type rdfs:Datatype ;
                                                                                                                     owl:oneOf [ rdf:type rdf:List ;
@@ -151,6 +154,7 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Data_creacion
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Data_creacion> rdf:type owl:DatatypeProperty ;
                                                                                                  rdfs:subPropertyOf owl:topDataProperty ;
+                                                                                                 rdf:type owl:FunctionalProperty ;
                                                                                                  rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Obra> ;
                                                                                                  rdfs:range xsd:dateTime .
 
@@ -158,6 +162,7 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Dimensiones_alto
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Dimensiones_alto> rdf:type owl:DatatypeProperty ;
                                                                                                     rdfs:subPropertyOf owl:topDataProperty ;
+                                                                                                    rdf:type owl:FunctionalProperty ;
                                                                                                     rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Obra> ;
                                                                                                     rdfs:range xsd:float .
 
@@ -165,6 +170,7 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Dimensiones_largo
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Dimensiones_largo> rdf:type owl:DatatypeProperty ;
                                                                                                      rdfs:subPropertyOf owl:topDataProperty ;
+                                                                                                     rdf:type owl:FunctionalProperty ;
                                                                                                      rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Obra> ;
                                                                                                      rdfs:range xsd:float .
 
@@ -172,6 +178,7 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Duracion_visita
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Duracion_visita> rdf:type owl:DatatypeProperty ;
                                                                                                    rdfs:subPropertyOf owl:topDataProperty ;
+                                                                                                   rdf:type owl:FunctionalProperty ;
                                                                                                    rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Visita> ;
                                                                                                    rdfs:range xsd:int .
 
@@ -179,6 +186,7 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Hay_peques_visita
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Hay_peques_visita> rdf:type owl:DatatypeProperty ;
                                                                                                      rdfs:subPropertyOf owl:topDataProperty ;
+                                                                                                     rdf:type owl:FunctionalProperty ;
                                                                                                      rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Visita> ;
                                                                                                      rdfs:range xsd:boolean .
 
@@ -186,6 +194,7 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Importancia
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Importancia> rdf:type owl:DatatypeProperty ;
                                                                                                rdfs:subPropertyOf owl:topDataProperty ;
+                                                                                               rdf:type owl:FunctionalProperty ;
                                                                                                rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Obra> ;
                                                                                                rdfs:range [ rdf:type rdfs:Datatype ;
                                                                                                             owl:oneOf [ rdf:type rdf:List ;
@@ -204,6 +213,7 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nacionalidad
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nacionalidad> rdf:type owl:DatatypeProperty ;
                                                                                                 rdfs:subPropertyOf owl:topDataProperty ;
+                                                                                                rdf:type owl:FunctionalProperty ;
                                                                                                 rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Pintor> ;
                                                                                                 rdfs:range xsd:string .
 
@@ -211,6 +221,7 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Ndias_visita
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Ndias_visita> rdf:type owl:DatatypeProperty ;
                                                                                                 rdfs:subPropertyOf owl:topDataProperty ;
+                                                                                                rdf:type owl:FunctionalProperty ;
                                                                                                 rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Visita> ;
                                                                                                 rdfs:range xsd:int .
 
@@ -218,6 +229,7 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> rdf:type owl:DatatypeProperty ;
                                                                                           rdfs:subPropertyOf owl:topDataProperty ;
+                                                                                          rdf:type owl:FunctionalProperty ;
                                                                                           rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Obra> ,
                                                                                                       <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Pintor> ;
                                                                                           rdfs:range xsd:string .
@@ -226,6 +238,7 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Npersonas_visita
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Npersonas_visita> rdf:type owl:DatatypeProperty ;
                                                                                                     rdfs:subPropertyOf owl:topDataProperty ;
+                                                                                                    rdf:type owl:FunctionalProperty ;
                                                                                                     rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Visita> ;
                                                                                                     rdfs:range xsd:int .
 
@@ -233,6 +246,7 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Sala
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Sala> rdf:type owl:DatatypeProperty ;
                                                                                         rdfs:subPropertyOf owl:topDataProperty ;
+                                                                                        rdf:type owl:FunctionalProperty ;
                                                                                         rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Obra> ;
                                                                                         rdfs:range xsd:int .
 
