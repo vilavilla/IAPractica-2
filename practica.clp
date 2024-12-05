@@ -1,4 +1,4 @@
-; Definición de clases en CLIPS
+;; 1. Definición de clases en CLIPS
 ;;; ---------------------------------------------------------
 ;;; Ontologia_SBC.clp
 ;;; Translated by owl2clips
@@ -6,20 +6,17 @@
 ;;; :Date 04/12/2024 10:47:17
 load "Ontologia_SBC.clp"
 
-;;Definicion modulos
-;;Clasificación heurística
+;;2. Exportación del MAIN y definicion módulos
+
 (defmodule MAIN (export ?ALL) )
 
 (defmodule getInput (import MAIN ?ALL) (export ?ALL) )
 
-;Pasar de problema concreto a uno abstracto
 (defmodule abstraccion (import MAIN ?ALL) (import getInput ?ALL) (export ?ALL) )
 
-;Realizar asociación heurística
 (defmodule asociacionHeuristica (import MAIN ?ALL) (import abstraccion ?ALL) (export ?ALL) )
 
-;Generar resultado
-(defmodule getResultado (import MAIN ?ALL) (import asociacionHeuristica ?ALL) (export ?ALL) )
+(defmodule showResultado (import MAIN ?ALL) (import asociacionHeuristica ?ALL) (export ?ALL) )
 
 (defrule MAIN::reglaInicial
 	(declare (salience 10))
@@ -32,7 +29,7 @@ load "Ontologia_SBC.clp"
 	(focus getInput) 
 )
 
-;; Definición de Templates
+;; 3. Templates
 (deftemplate MAIN::datosVisita
     (slot Npersonas_visita)
     (slot Conocimiento_visita)
@@ -47,7 +44,11 @@ load "Ontologia_SBC.clp"
     (slot Estilo)
     (slot Pintor)
 )
-;; Definición de funciones
+
+;; 4. Mensajes
+
+
+;; 5. Funciones
 
 (deffunction MAIN::pregunta_numero (?pregunta)
     (printout t ?pregunta)
@@ -110,7 +111,10 @@ load "Ontologia_SBC.clp"
     ?lista
 )
 
-;;Reglas 
+
+;; 6. Reglas
+
+;; (a) Módulos de preguntas.
 (defrule getInput::preguntaNumeroPersonas
     (declare (salience 10))
     =>
@@ -135,8 +139,8 @@ load "Ontologia_SBC.clp"
 (defrule getInput::pregunta_conocimiento
     (declare (salience 10))
     =>
-    (bind ?pregunta "¿Cuanto conocimiento tienen sobre arte? ")
-    (bind ?respuesta (pregunta_opcion_unica ?pregunta "Nada" "Poco" "Mucho"))
+    (bind ?pregunta "¿Cuanto conocimiento tienen sobre arte? [1-10]")
+    (bind ?respuesta (pregunta_numero ?pregunta))
     (assert (datosVisita (Conocimiento_visita ?respuesta)))
 )
 (defrule getInput::pregunta_peques
@@ -154,7 +158,7 @@ load "Ontologia_SBC.clp"
     (bind ?respuesta (pregunta_boolean ?pregunta))
     (if ?respuesta then
         (bind ?pregunta "¿Cual es su preferencia en cuanto a la tematica de las obras? ")
-        (bind ?respuesta (pregunta_opcion_unica ?pregunta "Religioso" "Historico" "Retrato" "Paisaje" "Costumbrista" "Bodegon"))
+        (bind ?respuesta (pregunta_opcion_unica ?pregunta "Mitologico" "Historico" "Religioso" "Retrato" "Tragedia" "Naturaleza" "Alegoria"))
         (assert (preferenciasVisita (Tematica ?respuesta)))
     )
 
@@ -162,27 +166,27 @@ load "Ontologia_SBC.clp"
     (bind ?respuesta (pregunta_boolean ?pregunta))
     (if ?respuesta then
         (bind ?pregunta "¿Cual es su preferencia en cuanto a la epoca de las obras? ")
-        (bind ?respuesta (pregunta_opcion_unica ?pregunta "Antigua" "Moderna" "Contemporanea"))
+        (bind ?respuesta (pregunta_opcion_unica ?pregunta "s.XXVI a.C" "s.IX a.C" "s.II a.C" "s.XII" "s.XV" "s.XVI" "s.XVII" "s.XVIII" "s.XIX" "s.XX"))
         (assert (preferenciasVisita (Epoca ?respuesta)))
     )
     (bind ?pregunta "¿Tiene alguna preferencia en cuanto al estilo de las obras? ")
     (bind ?respuesta (pregunta_boolean ?pregunta))
     (if ?respuesta then
         (bind ?pregunta "¿Cual es su preferencia en cuanto al estilo de las obras? ")
-        (bind ?respuesta (pregunta_opcion_unica ?pregunta "Clasico" "Romantico" "Realista" "Impresionista" "Expresionista" "Abstracto"))
+        (bind ?respuesta (pregunta_opcion_unica ?pregunta "Asirio" "Barroco" "Egipcio" "Gotico" "Expresionismo" "Neoclasismo" "Renacimiento" "Romanticismo" "Griego-Helenistico"))
         (assert (preferenciasVisita (Estilo ?respuesta)))
     )
     (bind ?pregunta "¿Tiene alguna preferencia en cuanto al pintor de las obras? ")
     (bind ?respuesta (pregunta_boolean ?pregunta))
     (if ?respuesta then
         (bind ?pregunta "¿Cual es su preferencia en cuanto al pintor de las obras? ")
-        (bind ?respuesta (pregunta_opcion_unica ?pregunta "Velazquez" "Goya" "Picasso" "Dali" "Van Gogh" "Rembrandt"))
+        (bind ?respuesta (pregunta_opcion_unica ?pregunta "Da Vinci" "Gericault" "Botticelli" "Veronese" "Buonarroti" "Vermeer" "Dominique Ingres" "Jacques-Louis David" "Coustou" "De la tour" "Braque" "Delacroix" "Alejandro de Antioquía"))
         (assert (preferenciasVisita (Pintor ?respuesta)))
     )
     (focus abstraccion)
 )
 
-;;Reglas de abstracción EN ESTA PARTE HAY QUE HACER UNA INSTANCIA DE LA VISITA CON LOS DATOS RECOGIDOS
+;; Reglas de abstracción 
 (defrule abstraccion::abstraccionVisita
     (declare (salience 10))
     ?datosVisita <- (datosVisita (Npersonas_visita ?n) (Conocimiento_visita ?c) (Ndias_visita ?d) (Duracion_visita ?h) (Hay_peques_visita ?p))
@@ -191,3 +195,7 @@ load "Ontologia_SBC.clp"
     (assert (Visita (Npersonas_visita ?n) (Conocimiento_visita ?c) (Ndias_visita ?d) (Duracion_visita ?h) (Hay_peques_visita ?p) (Tematica ?t) (Epoca ?e) (Estilo ?s) (Pintor ?pi)))
     (focus asociacionHeuristica)
 )
+
+;; Reglas de asociación heurística
+
+;;  Módulo de impresión de resultados
