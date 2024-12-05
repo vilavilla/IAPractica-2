@@ -23,7 +23,7 @@ load "Ontologia_SBC.clp"
 	=>
 	(printout t crlf)
 	(printout t "--------------------------------------------------------------" crlf)
-	(printout t "-------------------- Practica SBC Museo ----------------------" crlf)
+	(printout t "|                     Práctica SBC Museo                      |" crlf)
 	(printout t "--------------------------------------------------------------" crlf)
 	(printout t crlf)
 	(focus getInput) 
@@ -199,3 +199,64 @@ load "Ontologia_SBC.clp"
 ;; Reglas de asociación heurística
 
 ;;  Módulo de impresión de resultados
+(defrule asociacionHeuristica::
+    ?visita <- (object (is-a Visita))
+    =>
+
+    (bind ?prefiere_epoca (send ?visita get-visita_tiene_preferencia_epoca))
+    (bind ?prefiere_estilo (send ?visita get-visita_tiene_preferencia_estilo))
+    (bind ?prefiere_artista (send ?visita get-vista_tiene_preferencia_artista))
+    (bind ?prefiere_tematica (send ?visita get-visita_tiene_preferencia_tematica))
+
+    ;; 1 - comprobar preferencias ;;;; prioridad cuadros (1-3)
+    ;; 2 - 
+
+)
+
+(defrule asociacionHeuristica::mirar-preferencias 
+	(estilo ?estilo) 
+    (pintor ?pintor) 
+    (epoca ?epoca) 
+    (tematica ?tematica)
+	=>
+	
+)
+
+(defrule asociacionHeuristica::crea-ruta
+	(declare (salience 10))
+	
+	=>
+	
+)
+
+(defrule asociacionHeuristica::poner-obras-ruta
+	(declare (salience 10))
+	
+	=>
+	
+)
+
+(defrule asociacionHeuristica::ordenar-por-salas 
+	(declare (salience 10))
+	
+	=>
+	
+)
+
+(defrule asociacionHeuristica::mostrarResultado
+    (declare (salience -20))
+    => 
+    (focus showResultado)
+)
+
+;; Reglas de impresión del resultado
+
+(defrule impresionResultado::banner "regla inicial"
+    (declare (salience 10))
+    =>
+    (printout t crlf)
+    (printout t "---------------------------------------------------------------" crlf)
+    (printout t "|                     Ruta recomendada                        |" crlf)
+    (printout t "---------------------------------------------------------------" crlf)
+    (printout t crlf)
+)
