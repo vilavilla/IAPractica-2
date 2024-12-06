@@ -230,8 +230,11 @@
 <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> rdf:type owl:DatatypeProperty ;
                                                                                           rdfs:subPropertyOf owl:topDataProperty ;
                                                                                           rdf:type owl:FunctionalProperty ;
-                                                                                          rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Obra> ,
-                                                                                                      <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Pintor> ;
+                                                                                          rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Epoca> ,
+                                                                                                      <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Estilo> ,
+                                                                                                      <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Obra> ,
+                                                                                                      <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Pintor> ,
+                                                                                                      <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
                                                                                           rdfs:range xsd:string .
 
 
