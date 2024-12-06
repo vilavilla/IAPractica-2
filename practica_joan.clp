@@ -1,151 +1,294 @@
-; Gestión de Estilos
-(bind ?estiloNombres (create$)) ; Inicializa lista vacía para nombres de estilos
-(bind ?estilos (find-all-instances ((?instancia Estilo)) TRUE)) ; Encuentra todas las instancias de Estilo
-(do-for-all-facts (?estilo ?estilos) ; Recorre cada instancia de Estilo
-    (bind ?nombreEstilo (send ?estilo get-Nombre))
-    (bind ?estiloNombres (insert$ ?estiloNombres (length$ ?estiloNombres) ?nombreEstilo)) ; Añade nombre del estilo a la lista
-)
-(bind ?estiloIndices (pregunta-multiple "Seleccione los estilos preferidos:" ?estiloNombres))
-(bind ?preferenciasEstilos (create$)) ; Inicializa lista de preferencias de estilos
-(do-for-all-facts (?indice ?estiloIndices)
-    (bind ?estiloSeleccionado (nth$ ?indice ?estilos))
-    (bind ?preferenciasEstilos (insert$ ?preferenciasEstilos (length$ ?preferenciasEstilos) ?estiloSeleccionado)) ; Añade estilo seleccionado a las preferencias
+;; 1. Definición de clases en CLIPS
+;;; ---------------------------------------------------------
+;;; Ontologia_SBC.clp
+;;; Translated by owl2clips
+;;; Translated to CLIPS from ontology Ontologia_SBC.ttl
+;;; :Date 04/12/2024 10:47:17
+load "Ontologia_SBC.clp"
+
+;;2. Exportación del MAIN y definicion módulos
+
+(defmodule MAIN (export ?ALL) )
+
+(defmodule getInput (import MAIN ?ALL) (export ?ALL) )
+
+(defmodule abstraccion (import MAIN ?ALL) (import getInput ?ALL) (export ?ALL) )
+
+(defmodule asociacionHeuristica (import MAIN ?ALL) (import abstraccion ?ALL) (export ?ALL) )
+
+(defmodule showResultado (import MAIN ?ALL) (import asociacionHeuristica ?ALL) (export ?ALL) )
+
+(defrule MAIN::reglaInicial
+	(declare (salience 10))
+	=>
+	(printout t crlf)
+	(printout t "--------------------------------------------------------------" crlf)
+	(printout t "|                     Práctica SBC Museo                      |" crlf)
+	(printout t "--------------------------------------------------------------" crlf)
+	(printout t crlf)
+	(focus getInput) 
 )
 
-; Gestión de Pintores
-(bind ?pintorNombres (create$)) ; Inicializa lista vacía para nombres de pintores
-(bind ?pintores (find-all-instances ((?instancia Pintor)) TRUE)) ; Encuentra todas las instancias de Pintor
-(do-for-all-facts (?pintor ?pintores) ; Recorre cada instancia de Pintor
-    (bind ?nombrePintor (send ?pintor get-Nombre))
-    (bind ?pintorNombres (insert$ ?pintorNombres (length$ ?pintorNombres) ?nombrePintor)) ; Añade nombre del pintor a la lista
-)
-(bind ?pintorIndices (pregunta-multiple "Seleccione los pintores preferidos:" ?pintorNombres))
-(bind ?preferenciasPintores (create$)) ; Inicializa lista de preferencias de pintores
-(do-for-all-facts (?indice ?pintorIndices)
-    (bind ?pintorSeleccionado (nth$ ?indice ?pintores))
-    (bind ?preferenciasPintores (insert$ ?preferenciasPintores (length$ ?preferenciasPintores) ?pintorSeleccionado)) ; Añade pintor seleccionado a las preferencias
+;; 3. Templates
+(deftemplate MAIN::datosVisita
+    (slot Npersonas_visita)
+    (slot Conocimiento_visita)
+    (slot Ndias_visita)
+    (slot Duracion_visita)
+    (slot Hay_peques_visita)
 )
 
-; Gestión de Épocas
-(bind ?epocaNombres (create$)) ; Inicializa lista vacía para nombres de épocas
-(bind ?epocas (find-all-instances ((?instancia Epoca)) TRUE)) ; Encuentra todas las instancias de Época
-(do-for-all-facts (?epoca ?epocas) ; Recorre cada instancia de Época
-    (bind ?nombreEpoca (send ?epoca get-Nombre))
-    (bind ?epocaNombres (insert$ ?epocaNombres (length$ ?epocaNombres) ?nombreEpoca)) ; Añade nombre de la época a la lista
-)
-(bind ?epocaIndices (pregunta-multiple "Seleccione las épocas preferidas:" ?epocaNombres))
-(bind ?preferenciasEpocas (create$)) ; Inicializa lista de preferencias de épocas
-(do-for-all-facts (?indice ?epocaIndices)
-    (bind ?epocaSeleccionada (nth$ ?indice ?epocas))
-    (bind ?preferenciasEpocas (insert$ ?preferenciasEpocas (length$ ?preferenciasEpocas) ?epocaSeleccionada)) ; Añade época seleccionada a las preferencias
+(deftemplate MAIN::preferenciasVisita
+    (slot Tematica)
+    (slot Epoca)
+    (slot Estilo)
+    (slot Pintor)
 )
 
-; Gestión de Temáticas
-(bind ?tematicaNombres (create$)) ; Inicializa lista vacía para nombres de temáticas
-(bind ?tematicas (find-all-instances ((?instancia Tematica)) TRUE)) ; Encuentra todas las instancias de Temática
-(do-for-all-facts (?tematica ?tematicas) ; Recorre cada instancia de Temática
-    (bind ?nombreTematica (send ?tematica get-Nombre))
-    (bind ?tematicaNombres (insert$ ?tematicaNombres (length$ ?tematicaNombres) ?nombreTematica)) ; Añade nombre de la temática a la lista
-)
-(bind ?tematicaIndices (pregunta-multiple "Seleccione las temáticas preferidas:" ?tematicaNombres))
-(bind ?preferenciasTematicas (create$)) ; Inicializa lista de preferencias de temáticas
-(do-for-all-facts (?indice ?tematicaIndices)
-    (bind ?tematicaSeleccionada (nth$ ?indice ?tematicas))
-    (bind ?preferenciasTematicas (insert$ ?preferenciasTematicas (length$ ?preferenciasTematicas) ?tematicaSeleccionada)) ; Añade temática seleccionada a las preferencias
+(deftemplate ResultadoFinal
+    (slot descripcion)
+    (slot valor)
 )
 
-; Creación de hechos de preferencias de visita
-(assert (auxEstilo aux))
-(assert (auxPintor aux))
-(assert (auxEpoca aux))
-(assert (auxTematica aux))
-(assert (auxCuadros aux))
-(assert (PreferenciasVisita 
-    (PreferenciasEstilo ?preferenciasEstilos)
-    (PreferenciasPintor ?preferenciasPintores)
-    (PreferenciasEpoca ?preferenciasEpocas)
-    (PreferenciasTematica ?preferenciasTematicas)
-))
-(focus crearPrioridades)
+;; 4. Mensajes
 
-; Generación de prioridades para cada cuadro
-(defrule crearPrioridades::generar_prioridades "Generar prioridades para cada cuadro basado en las preferencias"
-    (declare (salience 10))
-    (Visita (conocimiento ?conocimiento) (personas ?personas) (ninos ?ninos) (masninos ?masninos))
-    ?aux <- (auxCuadros aux)
-    =>
-    (retract ?aux)
-    (bind ?cuadros (find-all-instances ((?instancia Cuadro)) TRUE))
-    (progn$ (?cuadro ?cuadros)
-        (bind ?prioridad 0)
-        (bind ?duracion 9)
-        (bind ?relevancia (send ?cuadro get-Relevancia))
-        (bind ?complejidad (send ?cuadro get-Complejidad))
-        
-        ; Ajuste de prioridad basado en el conocimiento del visitante
-        (if (or (eq ?conocimiento 1) (eq ?conocimiento 0)) then (bind ?prioridad (+ ?prioridad (* ?relevancia 2))))
-        (if (eq ?conocimiento 2) then (bind ?prioridad (+ ?prioridad ?relevancia)))
-        
-        ; Ajuste de duración basado en diferentes factores
-        (bind ?duracion (+ ?duracion (round (/ ?personas 10))))
-        (bind ?duracion (+ ?duracion (round (/ ?conocimiento 2))))
-        (bind ?duracion (+ ?duracion ?relevancia))
-        (bind ?duracion (+ ?duracion (round (/ ?complejidad 20000))))
-        
-        ; Ajuste de duración si hay niños
-        (if ?ninos
-            then (if ?masninos
-                then (bind ?duracion (- ?duracion 4))
-                else (bind ?duracion (- ?duracion 2))
-            )
+
+;; 5. Funciones
+
+(deffunction MAIN::pregunta_numero (?pregunta)
+    (printout t ?pregunta)
+    (bind ?respuesta (read))
+    ?respuesta
+)
+
+(deffunction MAIN::pregunta_boolean (?pregunta)
+    (format t "%s [T/F] " ?pregunta)
+    (bind ?respuesta (read))
+
+    (while (not (or (eq ?respuesta "T") (eq ?respuesta "F")))
+        (format t "Por favor, responda con T o F: ")
+        (bind ?respuesta (read))
+    )
+
+    (if (eq ?respuesta "T") then
+        TRUE
+    else
+        FALSE
+    )
+    
+)
+
+(deffunction MAIN::pregunta_opcion_unica (?pregunta $?opciones)
+   (bind ?indice 1)
+   (bind ?linea (format nil "%s" ?pregunta))
+   (printout t ?linea crlf)
+
+   (progn$ (?valor $?opciones)
+      (bind ?linea (format nil "  %d. %s" ?indice ?valor))
+      (printout t ?linea crlf)
+      (bind ?indice (+ ?indice 1))
+   )
+
+   (format t "%s" "Indica tu respuesta (Escoge el indice correspondiente): ")
+   (bind ?resp (read))
+   ?resp
+)
+
+(deffunction MAIN::pregunta_opciones_multiples (?pregunta $?opciones)
+    (bind ?linea (format nil "%s" ?pregunta))
+    (printout t ?linea crlf)
+    (progn$ (?var ?opciones)
+            (bind ?linea (format nil "  %d. %s" ?indice ?var))
+            (printout t ?linea crlf)
+    )
+    (format t "%s" "Indica tu respuesta (Escogiendo el indice correspondiente, separados por un espacio): ")
+    (bind ?respuesta (readline))
+    (bind ?numeros (str-explode ?respuesta))
+    (bind $?lista (create$ ))
+    (progn$ (?var ?numeros)
+        (if (and (integerp ?var) (and (>= ?var 1) (<= ?var (length$ ?opciones))))
+            then
+                (if (not (member$ ?var ?lista))
+                    then (bind ?lista (insert$ ?lista (+ (length$ ?lista) 1) ?var))
+                )
         )
-        
-        (make-instance (gensym) of PrioridadCuadro (Cuadro ?cuadro) (Prioridad ?prioridad) (Duracion ?duracion))
     )
+    ?lista<23
 )
 
-; Reglas para crear hechos de preferencias
-(defrule crearPrioridades::crear_estilos_preferencias "Crea hechos para estilos preferidos"
-    (declare (salience 10))
-    (PreferenciasVisita (PreferenciasEstilo $?estilos))
-    ?aux <- (auxEstilo aux)
+
+;; 6. Reglas
+
+;; (a) Módulos de preguntas.
+(defrule getInput::preguntaNumeroPersonas
     =>
-    (retract ?aux)
-    (progn$ (?estilo $?estilos)
-        (assert (estilo ?estilo))
-    )
+    (bind ?pregunta "¿Cuantas personas van a visitar el museo? ")
+    (bind ?respuesta (pregunta_numero ?pregunta))
+    (assert (datosVisita (Npersonas_visita ?respuesta)))
+)
+(defrule getInput::Ndias_visita
+    =>
+    (bind ?pregunta "¿Cuantos dias va a durar la visita? ")
+    (bind ?respuesta (pregunta_numero ?pregunta))
+    (assert (datosVisita (Ndias_visita ?respuesta)))
+)
+(defrule getInput::Duracion_visita
+    =>
+    (bind ?pregunta "¿Cuantas horas por dia va a durar la visita? ")
+    (bind ?respuesta (pregunta_numero ?pregunta))
+    (assert (datosVisita (Duracion_visita ?respuesta)))
+)
+(defrule getInput::pregunta_conocimiento
+    =>
+    (bind ?pregunta "¿Cuanto conocimiento tienen sobre arte? [1-10]")
+    (bind ?respuesta (pregunta_numero ?pregunta))
+    (assert (datosVisita (Conocimiento_visita ?respuesta)))
+)
+(defrule getInput::pregunta_peques
+    =>
+    (bind ?pregunta "¿Van a ir niños pequeños? ")
+    (bind ?respuesta (pregunta_boolean ?pregunta))
+    (assert (datosVisita (Hay_peques_visita ?respuesta)))
 )
 
-(defrule crearPrioridades::crear_pintores_preferencias "Crea hechos para pintores preferidos"
-    (declare (salience 10))
-    (PreferenciasVisita (PreferenciasPintor $?pintores))
-    ?aux <- (auxPintor aux)
+(defrule getInput::preguntaPreferencias
     =>
-    (retract ?aux)
-    (progn$ (?pintor $?pintores)
-        (assert (pintor ?pintor))
+    (bind ?pregunta "¿Tiene alguna preferencia en cuanto a la tematica de las obras? ")
+    (bind ?respuesta (pregunta_boolean ?pregunta))
+    (if ?respuesta then
+        (bind ?pregunta "¿Cual es su preferencia en cuanto a la tematica de las obras? ")
+        (bind ?respuesta (pregunta_opcion_unica ?pregunta "Mitologico" "Historico" "Religioso" "Retrato" "Tragedia" "Naturaleza" "Alegoria"))
+        (assert (preferenciasVisita (Tematica ?respuesta)))
     )
+
+    (bind ?pregunta "¿Tiene alguna preferencia en cuanto a la epoca de las obras? ")
+    (bind ?respuesta (pregunta_boolean ?pregunta))
+    (if ?respuesta then
+        (bind ?pregunta "¿Cual es su preferencia en cuanto a la epoca de las obras? ")
+        (bind ?respuesta (pregunta_opcion_unica ?pregunta "s.XXVI a.C" "s.IX a.C" "s.II a.C" "s.XII" "s.XV" "s.XVI" "s.XVII" "s.XVIII" "s.XIX" "s.XX"))
+        (assert (preferenciasVisita (Epoca ?respuesta)))
+    )
+    (bind ?pregunta "¿Tiene alguna preferencia en cuanto al estilo de las obras? ")
+    (bind ?respuesta (pregunta_boolean ?pregunta))
+    (if ?respuesta then
+        (bind ?pregunta "¿Cual es su preferencia en cuanto al estilo de las obras? ")
+        (bind ?respuesta (pregunta_opcion_unica ?pregunta "Asirio" "Barroco" "Egipcio" "Gotico" "Expresionismo" "Neoclasismo" "Renacimiento" "Romanticismo" "Griego-Helenistico"))
+        (assert (preferenciasVisita (Estilo ?respuesta)))
+    )
+    (bind ?pregunta "¿Tiene alguna preferencia en cuanto al pintor de las obras? ")
+    (bind ?respuesta (pregunta_boolean ?pregunta))
+    (if ?respuesta then
+        (bind ?pregunta "¿Cual es su preferencia en cuanto al pintor de las obras? ")
+        (bind ?respuesta (pregunta_opcion_unica ?pregunta "Da Vinci" "Gericault" "Botticelli" "Veronese" "Buonarroti" "Vermeer" "Dominique Ingres" "Jacques-Louis David" "Coustou" "De la tour" "Braque" "Delacroix" "Alejandro de Antioquía"))
+        (assert (preferenciasVisita (Pintor ?respuesta)))
+    )
+    (focus abstraccion)
 )
 
-(defrule crearPrioridades::crear_epocas_preferencias "Crea hechos para épocas preferidas"
+;; Reglas de abstracción 
+(defrule abstraccion::abstraccionVisita
     (declare (salience 10))
-    (PreferenciasVisita (PreferenciasEpoca $?epocas))
-    ?aux <- (auxEpoca aux)
+    ?datosVisita <- (datosVisita (Npersonas_visita ?n) (Conocimiento_visita ?c) (Ndias_visita ?d) (Duracion_visita ?h) (Hay_peques_visita ?p))
+    ?preferenciasVisita <- (preferenciasVisita (Tematica ?t) (Epoca ?e) (Estilo ?s) (Pintor ?pi))
     =>
-    (retract ?aux)
-    (progn$ (?epoca $?epocas)
-        (assert (epoca ?epoca))
-    )
+    (assert (Visita (Npersonas_visita ?n) (Conocimiento_visita ?c) (Ndias_visita ?d) (Duracion_visita ?h) (Hay_peques_visita ?p) (Tematica ?t) (Epoca ?e) (Estilo ?s) (Pintor ?pi)))
+    (focus asociacionHeuristica)
 )
 
-(defrule crearPrioridades::crear_tematicas_preferencias "Crea hechos para temáticas preferidas"
-    (declare (salience 10))
-    (PreferenciasVisita (PreferenciasTematica $?tematicas))
-    ?aux <- (auxTematica aux)
+;; Reglas de asociación heurística
+
+;;  Módulo de impresión de resultados
+(defrule asociacionHeuristica::
+    ?visita <- (object (is-a Visita))
     =>
-    (retract ?aux)
-    (progn$ (?tematica $?tematicas)
-        (assert (tematica ?tematica))
-    )
+
+    (bind ?prefiere_epoca (send ?visita get-visita_tiene_preferencia_epoca))
+    (bind ?prefiere_estilo (send ?visita get-visita_tiene_preferencia_estilo))
+    (bind ?prefiere_artista (send ?visita get-vista_tiene_preferencia_artista))
+    (bind ?prefiere_tematica (send ?visita get-visita_tiene_preferencia_tematica))
+
+    ;; 1 - comprobar preferencias ;;;; prioridad cuadros (1-3)
+    ;; 2 - 
+
 )
+
+(defrule asociacionHeuristica::mirar-preferencias 
+	(estilo ?estilo) 
+    (pintor ?pintor) 
+    (epoca ?epoca) 
+    (tematica ?tematica)
+	=>
+	
+)
+
+(defrule asociacionHeuristica::crea-ruta
+	(declare (salience 10))
+	
+	=>
+	
+)
+
+(defrule asociacionHeuristica::poner-obras-ruta
+	(declare (salience 10))
+	
+	=>
+	
+)
+
+(defrule asociacionHeuristica::ordenar-por-salas 
+	(declare (salience 10))
+	
+	=>
+	
+)
+
+(defrule asociacionHeuristica::mostrarResultado
+    (declare (salience -20))
+    => 
+    (focus showResultado)
+)
+
+;; Reglas de impresión del resultado
+
+(deftemplate showResultado::contador ;; <--- aqui no va
+    (slot count (type INTEGER))
+)
+
+(deffacts showResultado::hechos-iniciales
+    (contador (count 1))
+)
+
+(defrule showResultado::imprimir-cabecera
+    (declare (salience 10))
+    =>
+    (printout t crlf)
+    (printout t "-------------------------------------------------------------" crlf)
+    (printout t "-------------------- Resultados de la Ruta ------------------" crlf)
+    (printout t "-------------------------------------------------------------" crlf)
+    (printout t "---------------- Sala - Obra - Autor - Tiempo ---------------" crlf)
+    (printout t crlf)
+)
+
+(defrule showResultado::imprimir-resultado
+    ?contador <- (contador (count ?n))
+    (ruta ?obras)
+    (nth$ ?n ?obras ?obra)
+    =>
+    (bind ?sala (send ?obra get-sala))
+    (bind ?nombre (send ?obra get-nombre))
+    (bind ?autor (send ?obra get-autor))
+    (bind ?tiempo (send ?obra get-tiempo)) ;; lo quitamos si quereis
+
+    (format t "Sala %d:" ?sala)
+    (printout t crlf)
+    (printout t "-------------------------------------------------------------" crlf)
+    (printout t crlf)
+    (format t "%s - %s - %s - %d min" ?sala ?nombre ?autor ?tiempo)
+    (printout t crlf)
+    (printout t crlf)
+    (assert (contador (count (+ ?n 1))))
+    (retract ?contador)
+)
+
+
 
