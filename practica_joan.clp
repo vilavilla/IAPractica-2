@@ -4,7 +4,139 @@
 ;;; Translated by owl2clips
 ;;; Translated to CLIPS from ontology Ontologia_SBC.ttl
 ;;; :Date 04/12/2024 10:47:17
-load "Ontologia_SBC.clp"
+
+(defclass Epoca
+    (is-a USER)
+    (role concrete)
+    (pattern-match reactive)
+    (multislot epoca_tiene_obra
+        (type INSTANCE)
+        (create-accessor read-write))
+    (slot Nombre
+        (type STRING)
+        (create-accessor read-write))
+)
+
+(defclass Estilo
+    (is-a USER)
+    (role concrete)
+    (pattern-match reactive)
+    (multislot estilo_tiene_obra
+        (type INSTANCE)
+        (create-accessor read-write))
+    (slot Nombre
+        (type STRING)
+        (create-accessor read-write))
+)
+
+(defclass Obra
+    (is-a USER)
+    (role concrete)
+    (pattern-match reactive)
+    (slot obra_tiene_epoca
+        (type INSTANCE)
+        (create-accessor read-write))
+    (slot obra_tiene_estilo
+        (type INSTANCE)
+        (create-accessor read-write))
+    (slot obra_tiene_pintor
+        (type INSTANCE)
+        (create-accessor read-write))
+    (slot obra_tiene_tematica
+        (type INSTANCE)
+        (create-accessor read-write))
+    (slot Complejidad
+        (type SYMBOL)
+        (create-accessor read-write))
+    (slot Data_creacion
+        (type SYMBOL)
+        (create-accessor read-write))
+    (slot Dimensiones_alto
+        (type FLOAT)
+        (create-accessor read-write))
+    (slot Dimensiones_largo
+        (type FLOAT)
+        (create-accessor read-write))
+    (slot Importancia
+        (type SYMBOL)
+        (create-accessor read-write))
+    (slot Nombre
+        (type STRING)
+        (create-accessor read-write))
+    (slot Sala
+        (type INTEGER)
+        (create-accessor read-write))
+)
+
+(defclass Pintor
+    (is-a USER)
+    (role concrete)
+    (pattern-match reactive)
+    (multislot pintor_tiene_obra
+        (type INSTANCE)
+        (create-accessor read-write))
+    (slot Nacionalidad
+        (type STRING)
+        (create-accessor read-write))
+    (slot Nombre
+        (type STRING)
+        (create-accessor read-write))
+)
+
+(defclass Preferencia
+    (is-a USER)
+    (role concrete)
+    (pattern-match reactive)
+    (multislot preferencia_de_epoca
+        (type INSTANCE)
+        (create-accessor read-write))
+    (multislot preferencia_de_estilo
+        (type INSTANCE)
+        (create-accessor read-write))
+    (multislot preferencia_de_pintor
+        (type INSTANCE)
+        (create-accessor read-write))
+    (multislot preferencia_de_tematica
+        (type INSTANCE)
+        (create-accessor read-write))
+)
+
+(defclass Tematica
+    (is-a USER)
+    (role concrete)
+    (pattern-match reactive)
+    (multislot tematica_tiene_obra
+        (type INSTANCE)
+        (create-accessor read-write))
+    (slot Nombre
+        (type STRING)
+        (create-accessor read-write))
+)
+
+(defclass Visita
+    (is-a USER)
+    (role concrete)
+    (pattern-match reactive)
+    (multislot vista_tiene_preferencia
+        (type INSTANCE)
+        (create-accessor read-write))
+    (slot Conocimiento_visita
+        (type SYMBOL)
+        (create-accessor read-write))
+    (slot Duracion_visita
+        (type INTEGER)
+        (create-accessor read-write))
+    (slot Hay_peques_visita
+        (type SYMBOL)
+        (create-accessor read-write))
+    (slot Ndias_visita
+        (type INTEGER)
+        (create-accessor read-write))
+    (slot Npersonas_visita
+        (type INTEGER)
+        (create-accessor read-write))
+)
+
 
 ;;2. Exportación del MAIN y definicion módulos
 
@@ -31,23 +163,23 @@ load "Ontologia_SBC.clp"
 
 ;; 3. Templates
 (deftemplate MAIN::datosVisita
-    (slot Npersonas_visita)
-    (slot Conocimiento_visita)
-    (slot Ndias_visita)
-    (slot Duracion_visita)
-    (slot Hay_peques_visita)
+    (slot Npersonas_visita (type INTEGER) (default 0))
+    (slot Conocimiento_visita (type INTEGER) (default 0))
+    (slot Ndias_visita (type INTEGER) (default 0))
+    (slot Duracion_visita (type INTEGER) (default 0))
+    (slot Hay_peques_visita (type SYMBOL) (default FALSE))
 )
 
 (deftemplate MAIN::preferenciasVisita
-    (slot Tematica)
-    (slot Epoca)
-    (slot Estilo)
-    (slot Pintor)
+    (slot Tematica (type STRING))
+    (slot Epoca (type STRING))
+    (slot Estilo (type STRING))
+    (slot Pintor (type STRING))
 )
 
 (deftemplate ResultadoFinal
-    (slot descripcion)
-    (slot valor)
+    (slot descripcion (type STRING) (default "Resultado final"))
+    (slot valor (type INTEGER) (default 0))
 )
 
 ;; 4. Mensajes
@@ -95,6 +227,7 @@ load "Ontologia_SBC.clp"
 )
 
 (deffunction MAIN::pregunta_opciones_multiples (?pregunta $?opciones)
+    (bind ?indice 1)
     (bind ?linea (format nil "%s" ?pregunta))
     (printout t ?linea crlf)
     (progn$ (?var ?opciones)
@@ -118,7 +251,6 @@ load "Ontologia_SBC.clp"
 
 
 ;; 6. Reglas
-
 ;; (a) Módulos de preguntas.
 (defrule getInput::preguntaNumeroPersonas
     =>
@@ -157,7 +289,7 @@ load "Ontologia_SBC.clp"
     (bind ?respuesta (pregunta_boolean ?pregunta))
     (if ?respuesta then
         (bind ?pregunta "¿Cual es su preferencia en cuanto a la tematica de las obras? ")
-        (bind ?respuesta (pregunta_opcion_unica ?pregunta "Mitologico" "Historico" "Religioso" "Retrato" "Tragedia" "Naturaleza" "Alegoria"))
+        (bind ?respuesta (pregunta_opcion_unica ?pregunta "Mitologico" "Historico"))
         (assert (preferenciasVisita (Tematica ?respuesta)))
     )
 
@@ -165,87 +297,152 @@ load "Ontologia_SBC.clp"
     (bind ?respuesta (pregunta_boolean ?pregunta))
     (if ?respuesta then
         (bind ?pregunta "¿Cual es su preferencia en cuanto a la epoca de las obras? ")
-        (bind ?respuesta (pregunta_opcion_unica ?pregunta "s.XXVI a.C" "s.IX a.C" "s.II a.C" "s.XII" "s.XV" "s.XVI" "s.XVII" "s.XVIII" "s.XIX" "s.XX"))
+        (bind ?respuesta (pregunta_opcion_unica ?pregunta "s.XXVI a.C" "s.IX a.C" ))
         (assert (preferenciasVisita (Epoca ?respuesta)))
     )
     (bind ?pregunta "¿Tiene alguna preferencia en cuanto al estilo de las obras? ")
     (bind ?respuesta (pregunta_boolean ?pregunta))
     (if ?respuesta then
         (bind ?pregunta "¿Cual es su preferencia en cuanto al estilo de las obras? ")
-        (bind ?respuesta (pregunta_opcion_unica ?pregunta "Asirio" "Barroco" "Egipcio" "Gotico" "Expresionismo" "Neoclasismo" "Renacimiento" "Romanticismo" "Griego-Helenistico"))
+        (bind ?respuesta (pregunta_opcion_unica ?pregunta "Barroco" "Gotico" ))
         (assert (preferenciasVisita (Estilo ?respuesta)))
     )
     (bind ?pregunta "¿Tiene alguna preferencia en cuanto al pintor de las obras? ")
     (bind ?respuesta (pregunta_boolean ?pregunta))
     (if ?respuesta then
         (bind ?pregunta "¿Cual es su preferencia en cuanto al pintor de las obras? ")
-        (bind ?respuesta (pregunta_opcion_unica ?pregunta "Da Vinci" "Gericault" "Botticelli" "Veronese" "Buonarroti" "Vermeer" "Dominique Ingres" "Jacques-Louis David" "Coustou" "De la tour" "Braque" "Delacroix" "Alejandro de Antioquía"))
+        (bind ?respuesta (pregunta_opcion_unica ?pregunta "Da Vinci" "Gericault"))
         (assert (preferenciasVisita (Pintor ?respuesta)))
     )
     (focus abstraccion)
+);; Reglas de abstracción 
+(defrule abstraccion::abstraccionDatosVisita
+    ?datosVisita <- (datosVisita (Npersonas_visita ?n)
+                                  (Conocimiento_visita ?c)
+                                  (Ndias_visita ?d)
+                                  (Duracion_visita ?h)
+                                  (Hay_peques_visita ?p))
+    =>
+    (assert (Visita (Npersonas_visita ?n)
+                    (Conocimiento_visita ?c)
+                    (Ndias_visita ?d)
+                    (Duracion_visita ?h)
+                    (Hay_peques_visita ?p)))
+    (retract ?datosVisita)
 )
 
-;; Reglas de abstracción 
-(defrule abstraccion::abstraccionVisita
-    (declare (salience 10))
-    ?datosVisita <- (datosVisita (Npersonas_visita ?n) (Conocimiento_visita ?c) (Ndias_visita ?d) (Duracion_visita ?h) (Hay_peques_visita ?p))
-    ?preferenciasVisita <- (preferenciasVisita (Tematica ?t) (Epoca ?e) (Estilo ?s) (Pintor ?pi))
+(defrule abstraccion::abstraccionPreferenciasVisita
+    ?preferenciasVisita <- (preferenciasVisita (Tematica ?t)
+                                                (Epoca ?e)
+                                                (Estilo ?s)
+                                                (Pintor ?pi))
     =>
-    (assert (Visita (Npersonas_visita ?n) (Conocimiento_visita ?c) (Ndias_visita ?d) (Duracion_visita ?h) (Hay_peques_visita ?p) (Tematica ?t) (Epoca ?e) (Estilo ?s) (Pintor ?pi)))
+    (assert (Visita (vista_tiene_preferencia (create$ ?t ?e ?s ?pi))))
+    (retract ?preferenciasVisita)
+)
+
+(defrule abstraccion::combinarVisita
+    ?datosVisita <- (Visita (Npersonas_visita ?n)
+                             (Conocimiento_visita ?c)
+                             (Ndias_visita ?d)
+                             (Duracion_visita ?h)
+                             (Hay_peques_visita ?p))
+    ?preferenciasVisita <- (Visita (vista_tiene_preferencia $?preferencias))
+    =>
+    (assert (Visita (Npersonas_visita ?n)
+                    (Conocimiento_visita ?c)
+                    (Ndias_visita ?d)
+                    (Duracion_visita ?h)
+                    (Hay_peques_visita ?p)
+                    (vista_tiene_preferencia $?preferencias)))
+    (retract ?datosVisita ?preferenciasVisita)
     (focus asociacionHeuristica)
 )
 
 ;; Reglas de asociación heurística
+(defrule asociacionHeuristica::buscar-preferencias-visita
+    ?visita <- (datosVisita 
+                  (Duracion_visita ?duracionVisita))
+    ?preferencias <- (preferenciasVisita 
+                  (Tematica ?prefiereTematicas)
+                  (Epoca ?prefiereEpocas)
+                  (Estilo ?prefiereEstilos)
+                  (Pintor ?prefierePintores))
+    ?obra <- (object (is-a Obra) 
+               (obra_tiene_epoca ?obra_epocas) 
+               (obra_tiene_estilo ?obra_estilos) 
+               (obra_tiene_pintor ?obra_pintores) 
+               (obra_tiene_tematica ?obra_tematicas)
+               (Importancia ?importancia) 
+               (Sala ?sala))
+   =>
+   (bind ?prioridad 0)
 
-;;  Módulo de impresión de resultados
-(defrule asociacionHeuristica::
-    ?visita <- (object (is-a Visita))
-    =>
+   (foreach ?preferencia $?preferencias
+      
+      (foreach ?obra_epoca ?obra_epocas
+         (if (member$ ?obra_epoca ?prefiereEpocas) then 
+            (bind ?prioridad (+ ?prioridad 10))
+         )
+      )
 
-    (bind ?prefiere_epoca (send ?visita get-visita_tiene_preferencia_epoca))
-    (bind ?prefiere_estilo (send ?visita get-visita_tiene_preferencia_estilo))
-    (bind ?prefiere_artista (send ?visita get-vista_tiene_preferencia_artista))
-    (bind ?prefiere_tematica (send ?visita get-visita_tiene_preferencia_tematica))
+      (foreach ?obra_estilo ?obra_estilos
+         (if (member$ ?obra_estilo ?prefiereEstilos) then 
+            (bind ?prioridad (+ ?prioridad 10))
+         )
+      )
 
-    ;; 1 - comprobar preferencias ;;;; prioridad cuadros (1-3)
-    ;; 2 - 
+      (foreach ?obra_pintor ?obra_pintores
+         (if (member$ ?obra_pintor ?prefierePintores) then 
+            (bind ?prioridad (+ ?prioridad 10))
+         )
+      )
 
+      (foreach ?tematica ?obra_tematicas
+         (if (member$ ?tematica ?prefiereTematicas) then 
+            (bind ?prioridad (+ ?prioridad 10))
+         )
+      )
+   )
+
+   (if (eq ?importancia 3) then 
+      (bind ?prioridad (+ ?prioridad 5))
+   )
+
+   (assert (Obra_Preferente 
+               (Obra ?obra) 
+               (Prioridad ?prioridad) 
+               (Sala ?sala)
+               (Duracion 1)))
 )
 
-(defrule asociacionHeuristica::mirar-preferencias 
-	(estilo ?estilo) 
-    (pintor ?pintor) 
-    (epoca ?epoca) 
-    (tematica ?tematica)
-	=>
-	
-)
+(defrule asociacionHeuristica::crear-y-ordenar-ruta
+   (declare (salience 10))
+   ?visita <- (object (is-a Visita) (Duracion_visita ?tiempo_visita))
+   =>
+   (bind $?prioridades (find-all-instances (Obra_Preferente) TRUE))
 
-(defrule asociacionHeuristica::crea-ruta
-	(declare (salience 10))
-	
-	=>
-	
-)
+   (bind $?ruta (create$))
+   (bind ?tiempoRestante ?tiempo_visita)
 
-(defrule asociacionHeuristica::poner-obras-ruta
-	(declare (salience 10))
-	
-	=>
-	
-)
+   (foreach ?obra $?prioridades
+      (if (> ?tiempoRestante 0) then 
+         (bind ?duracion (send ?obra get-Duracion))
 
-(defrule asociacionHeuristica::ordenar-por-salas 
-	(declare (salience 10))
-	
-	=>
-	
-)
+         (if (<= ?duracion ?tiempoRestante) then
+            (bind ?tiempoRestante (- ?tiempoRestante ?duracion))
 
-(defrule asociacionHeuristica::mostrarResultado
-    (declare (salience -20))
-    => 
-    (focus showResultado)
+            (bind $?ruta (insert$ $?ruta (+ (length$ $?ruta) 1) ?obra))
+         )
+      )
+   )
+
+=   (bind $?rutaOrdenadaSala (sort-by-slot $?ruta Sala))
+
+=   (assert (Ruta (Obras $?rutaOrdenadaSala)))
+
+=   (focus impresionResultado)
+
 )
 
 ;; Reglas de impresión del resultado
