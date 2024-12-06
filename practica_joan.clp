@@ -148,7 +148,7 @@
 
 (defmodule asociacionHeuristica (import MAIN ?ALL) (import abstraccion ?ALL) (export ?ALL) )
 
-(defmodule showResultado (import MAIN ?ALL) (import asociacionHeuristica ?ALL) (export ?ALL) )
+(defmodule impresionResultado (import MAIN ?ALL) (import asociacionHeuristica ?ALL) (export ?ALL) )
 
 (defrule MAIN::reglaInicial
 	(declare (salience 10))
@@ -315,6 +315,7 @@
         (assert (preferenciasVisita (Pintor ?respuesta)))
     )
     (focus abstraccion)
+
 );; Reglas de abstracción 
 (defrule abstraccion::abstraccionDatosVisita
     ?datosVisita <- (datosVisita (Npersonas_visita ?n)
@@ -329,34 +330,6 @@
                     (Duracion_visita ?h)
                     (Hay_peques_visita ?p)))
     (retract ?datosVisita)
-)
-
-(defrule abstraccion::abstraccionPreferenciasVisita
-    ?preferenciasVisita <- (preferenciasVisita (Tematica ?t)
-                                                (Epoca ?e)
-                                                (Estilo ?s)
-                                                (Pintor ?pi))
-    =>
-    (assert (Visita (vista_tiene_preferencia (create$ ?t ?e ?s ?pi))))
-    (retract ?preferenciasVisita)
-)
-
-(defrule abstraccion::combinarVisita
-    ?datosVisita <- (Visita (Npersonas_visita ?n)
-                             (Conocimiento_visita ?c)
-                             (Ndias_visita ?d)
-                             (Duracion_visita ?h)
-                             (Hay_peques_visita ?p))
-    ?preferenciasVisita <- (Visita (vista_tiene_preferencia $?preferencias))
-    =>
-    (assert (Visita (Npersonas_visita ?n)
-                    (Conocimiento_visita ?c)
-                    (Ndias_visita ?d)
-                    (Duracion_visita ?h)
-                    (Hay_peques_visita ?p)
-                    (vista_tiene_preferencia $?preferencias)))
-    (retract ?datosVisita ?preferenciasVisita)
-    (focus asociacionHeuristica)
 )
 
 ;; Reglas de asociación heurística
@@ -442,20 +415,19 @@
 =   (assert (Ruta (Obras $?rutaOrdenadaSala)))
 
 =   (focus impresionResultado)
-
 )
 
 ;; Reglas de impresión del resultado
 
-(deftemplate showResultado::contador ;; <--- aqui no va
+(deftemplate impresionResultado::contador ;; <--- aqui no va
     (slot count (type INTEGER))
 )
 
-(deffacts showResultado::hechos-iniciales
+(deffacts impresionResultado::hechos-iniciales
     (contador (count 1))
 )
 
-(defrule showResultado::imprimir-cabecera
+(defrule impresionResultado::imprimir-cabecera
     (declare (salience 10))
     =>
     (printout t crlf)
@@ -466,7 +438,7 @@
     (printout t crlf)
 )
 
-(defrule showResultado::imprimir-resultado
+(defrule impresionResultado::imprimir-resultado
     ?contador <- (contador (count ?n))
     (ruta ?obras)
     (nth$ ?n ?obras ?obra)
