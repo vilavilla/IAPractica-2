@@ -2,7 +2,7 @@
 ;;; Ontologia_SBC.clp
 ;;; Translated by owl2clips
 ;;; Translated to CLIPS from ontology Ontologia_SBC.ttl
-;;; :Date 04/12/2024 15:57:12
+;;; :Date 06/12/2024 09:46:50
 
 (defclass Epoca
     (is-a USER)
@@ -10,6 +10,9 @@
     (pattern-match reactive)
     (multislot epoca_tiene_obra
         (type INSTANCE)
+        (create-accessor read-write))
+    (slot Nombre
+        (type STRING)
         (create-accessor read-write))
 )
 
@@ -19,6 +22,9 @@
     (pattern-match reactive)
     (multislot estilo_tiene_obra
         (type INSTANCE)
+        (create-accessor read-write))
+    (slot Nombre
+        (type STRING)
         (create-accessor read-write))
 )
 
@@ -100,6 +106,9 @@
     (pattern-match reactive)
     (multislot tematica_tiene_obra
         (type INSTANCE)
+        (create-accessor read-write))
+    (slot Nombre
+        (type STRING)
         (create-accessor read-write))
 )
 
