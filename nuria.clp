@@ -133,7 +133,9 @@
         (create-accessor read-write))
 )
 
-(definstances instances
+(definstances instancias
+
+
 )
 
 
@@ -329,55 +331,49 @@
 )
 
 ;; Reglas de abstracción 
-(defrule abstraccion::abstraccionVisita
-    (declare (salience 10))
-    ?datosVisita <- (datosVisita (Npersonas_visita ?n) (Conocimiento_visita ?c) (Ndias_visita ?d) (Duracion_visita ?h) (Hay_peques_visita ?p))
-    ?preferenciasVisita <- (preferenciasVisita (Tematica ?t) (Epoca ?e) (Estilo ?s) (Pintor ?pi))
-    =>
-    (assert (Visita (Npersonas_visita ?n) (Conocimiento_visita ?c) (Ndias_visita ?d) (Duracion_visita ?h) (Hay_peques_visita ?p) (Tematica ?t) (Epoca ?e) (Estilo ?s) (Pintor ?pi)))
-    (focus asociacionHeuristica)
-)
 
+
+;; Reglas de asociación heurística
 (defrule asociacionHeuristica::buscar-preferencias-visita
-   ?visita <- (Visita 
-                  (vista_tiene_preferencia $?preferencias) 
+    ?visita <- (datosVisita 
                   (Duracion_visita ?duracionVisita))
-   ?obra <- (Obra 
-               (obra_tiene_epoca $?obra_epocas) 
-               (obra_tiene_estilo $?obra_estilos) 
-               (obra_tiene_pintor $?obra_pintores) 
-               (obra_tiene_tematica $?obra_tematicas)
+    ?preferencias <- (preferenciasVisita 
+                  (Tematica ?prefiereTematicas)
+                  (Epoca ?prefiereEpocas)
+                  (Estilo ?prefiereEstilos)
+                  (Pintor ?prefierePintores))
+    ?obra <- (object (is-a Obra) 
+               (obra_tiene_epoca ?obra_epocas) 
+               (obra_tiene_estilo ?obra_estilos) 
+               (obra_tiene_pintor ?obra_pintores) 
+               (obra_tiene_tematica ?obra_tematicas)
                (Importancia ?importancia) 
                (Sala ?sala))
    =>
    (bind ?prioridad 0)
 
    (foreach ?preferencia $?preferencias
-      (bind $?visita_preferencia_epoca (send ?preferencia get-preferencia_de_epoca))
-      (bind $?visita_preferencia_estilo (send ?preferencia get-preferencia_de_estilo))
-      (bind $?visita_preferencia_pintor (send ?preferencia get-preferencia_de_pintor))
-      (bind $?visita_preferencia_tematica (send ?preferencia get-preferencia_de_tematica))
-
-      (foreach ?obra_epoca $?obra_epocas
-         (if (member$ ?obra_epoca $?visita_preferencia_epoca) then 
+      
+      (foreach ?obra_epoca ?obra_epocas
+         (if (member$ ?obra_epoca ?prefiereEpocas) then 
             (bind ?prioridad (+ ?prioridad 10))
          )
       )
 
-      (foreach ?obra_estilo $?obra_estilos
-         (if (member$ ?obra_estilo $?visita_preferencia_estilo) then 
+      (foreach ?obra_estilo ?obra_estilos
+         (if (member$ ?obra_estilo ?prefiereEstilos) then 
             (bind ?prioridad (+ ?prioridad 10))
          )
       )
 
-      (foreach ?obra_pintor $?obra_pintores
-         (if (member$ ?obra_pintor $?visita_preferencia_pintor) then 
+      (foreach ?obra_pintor ?obra_pintores
+         (if (member$ ?obra_pintor ?prefierePintores) then 
             (bind ?prioridad (+ ?prioridad 10))
          )
       )
 
-      (foreach ?tematica $?obra_tematicas
-         (if (member$ ?tematica $?visita_preferencia_tematica) then 
+      (foreach ?tematica ?obra_tematicas
+         (if (member$ ?tematica ?prefiereTematicas) then 
             (bind ?prioridad (+ ?prioridad 10))
          )
       )
@@ -394,11 +390,9 @@
                (Duracion 1)))
 )
 
-
-
 (defrule asociacionHeuristica::crear-y-ordenar-ruta
    (declare (salience 10))
-   ?visita <- (Visita (Duracion_visita ?tiempo_visita))
+   ?visita <- (object (is-a Visita) (Duracion_visita ?tiempo_visita))
    =>
    (bind $?prioridades (find-all-instances (Obra_Preferente) TRUE))
 
