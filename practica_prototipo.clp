@@ -1,3 +1,4 @@
+;; 1. Definición de clases en CLIPS
 ;;; ---------------------------------------------------------
 ;;; ontologia.clp
 ;;; Translated by owl2clips
@@ -57,7 +58,7 @@
         (type FLOAT)
         (create-accessor read-write))
     (slot Importancia
-        (type SYMBOL)
+        (type INTEGER)
         (create-accessor read-write))
     (slot Nombre
         (type STRING)
@@ -997,3 +998,635 @@
     )
 
 )
+
+;;2. Exportación del MAIN y definicion módulos
+
+(defmodule MAIN (export ?ALL) )
+
+(defmodule getInput (import MAIN ?ALL) (export ?ALL) )
+
+(defmodule abstraccion (import MAIN ?ALL) (import getInput ?ALL) (export ?ALL) )
+
+(defmodule asociacionHeuristica (import MAIN ?ALL) (import abstraccion ?ALL) (export ?ALL) )
+
+(defmodule showResultado (import MAIN ?ALL) (import asociacionHeuristica ?ALL) (export ?ALL) )
+
+(defrule MAIN::reglaInicial
+	(declare (salience 10))
+	=>
+	(printout t crlf)
+	(printout t "--------------------------------------------------------------" crlf)
+	(printout t "|                     Práctica SBC Museo                      |" crlf)
+	(printout t "--------------------------------------------------------------" crlf)
+	(printout t crlf)
+	(focus getInput) 
+)
+
+;; 3. Templates
+(deftemplate MAIN::datosVisita
+    (slot Npersonas_visita (type INTEGER) (default 0))
+    (slot Conocimiento_visita (type INTEGER) (default 0))
+    (slot Ndias_visita (type INTEGER) (default 0))
+    (slot Duracion_visita (type INTEGER) (default 0))
+    (slot Hay_peques_visita (type SYMBOL) (default FALSE))
+    (multislot Tematica)
+    (multislot Epoca)
+    (multislot Estilo)
+    (multislot Pintor)
+)
+
+(deftemplate ResultadoFinal
+    (slot descripcion (type STRING) (default "Resultado final"))
+    (slot valor (type INTEGER) (default 0))
+)
+
+(deftemplate MAIN::Obra_Preferente
+    (slot Obra) 
+    (slot Prioridad) 
+    (slot Sala) 
+    (slot Duracion) 
+)
+
+(deftemplate MAIN::Ruta
+    (multislot Obras)    ; Multislot para almacenar la lista de obras
+)
+;; 5. Funciones
+
+(deffunction MAIN::pregunta_numero (?pregunta)
+    (printout t ?pregunta)
+    (bind ?respuesta (read))
+    ?respuesta
+)
+
+(deffunction MAIN::pregunta_numero_con_rango (?pregunta ?min ?max)
+    (format t "%s " ?pregunta)
+    (bind ?respuesta (read))
+    
+    ;; Validar que la respuesta sea un número y esté dentro del rango
+    (while (or (not (integerp ?respuesta))
+               (< ?respuesta ?min)
+               (> ?respuesta ?max))
+        (format t "Por favor, introduzca un número entre %d y %d: " ?min ?max)
+        (bind ?respuesta (read))
+    )
+    
+    ;; Devolver la respuesta válida
+    (return ?respuesta)
+)
+
+(deffunction MAIN::pregunta_boolean (?pregunta)
+    (format t "%s[S/N] " ?pregunta)
+    (bind ?respuesta (read))
+
+    (while (not (or (eq ?respuesta S) (eq ?respuesta N)))
+        (format t "Por favor, responda con S o N: ")
+        (bind ?respuesta (read))
+    )
+
+    (if (eq ?respuesta S) 
+        then (return TRUE)
+        else (return FALSE)    ; Asegurar retorno explícito de FALSE
+    ) 
+)
+
+(deffunction MAIN::pregunta_opcion_unica (?pregunta $?opciones)
+   (bind ?indice 1)
+   (bind ?linea (format nil "%s" ?pregunta))
+   (printout t ?linea crlf)
+
+   (progn$ (?valor $?opciones)
+      (bind ?linea (format nil "  %d. %s" ?indice ?valor))
+      (printout t ?linea crlf)
+      (bind ?indice (+ ?indice 1))
+   )
+
+   (format t "%s" "Indica tu respuesta (Escoge el indice correspondiente): ")
+   (bind ?resp (read))
+   (return ?resp)
+)
+
+(deffunction MAIN::pregunta_opcion_multiple (?pregunta $?opciones)
+    ; Imprimir pregunta y opciones numeradas
+    (printout t ?pregunta crlf)
+    (bind ?ind 1)
+    (foreach ?opt $?opciones
+        (printout t ?ind ". " ?opt crlf)
+        (bind ?ind (+ ?ind 1))
+    )
+    
+    ; Leer respuesta del usuario
+    (printout t "Ingrese los números separados por espacios: ")
+    (bind ?respuesta (readline))
+    
+    ; Convertir la entrada en una lista de números
+    (bind $?selecciones (explode$ ?respuesta))
+    
+    ; Convertir strings a números y validar
+    (bind $?indices (create$))
+    (foreach ?idx $?selecciones
+        (bind ?num (integer (string-to-field ?idx)))
+        (if (and (integerp ?num) 
+                 (> ?num 0) 
+                 (<= ?num (length$ $?opciones)))
+            then 
+            (bind $?indices (create$ $?indices ?num))
+        )
+    )
+    
+    ; Devolver los índices seleccionados
+    (return $?indices)
+)
+
+(deffunction MAIN::sort-by-sala (?obras)
+   (bind ?len (length$ ?obras))
+   (bind ?sorted ?obras)
+   
+   ; Bucle exterior
+   (bind ?i 1)
+   (while (<= ?i (- ?len 1))
+      ; Bucle interior
+      (bind ?j (+ ?i 1))
+      (while (<= ?j ?len)
+         (bind ?obra1 (nth$ ?i ?sorted))
+         (bind ?obra2 (nth$ ?j ?sorted))
+         (bind ?sala1 (send ?obra1 get-Sala))
+         (bind ?sala2 (send ?obra2 get-Sala))
+         
+         ; Si la sala1 es mayor que sala2, intercambiar obras
+         (if (> ?sala1 ?sala2)
+            then
+            (bind ?sorted (replace$ ?sorted ?i ?i ?obra2))
+            (bind ?sorted (replace$ ?sorted ?j ?j ?obra1))
+         )
+         (bind ?j (+ ?j 1))
+      )
+      (bind ?i (+ ?i 1))
+   )
+   ?sorted
+)
+
+(deffunction MAIN::sort-by-prioridad (?obras)
+   (bind ?len (length$ ?obras))
+   (bind ?sorted ?obras)
+   
+   (bind ?i 1)
+   (while (<= ?i (- ?len 1))
+      (bind ?j (+ ?i 1))
+      (while (<= ?j ?len)
+         (bind ?obra1 (nth$ ?i ?sorted))
+         (bind ?obra2 (nth$ ?j ?sorted))
+         (bind ?prioridad1 (fact-slot-value ?obra1 Prioridad))
+         (bind ?prioridad2 (fact-slot-value ?obra2 Prioridad))
+         
+         ; Ordenar de mayor a menor (>) prioridad
+         (if (< ?prioridad1 ?prioridad2)
+            then
+            (bind ?sorted (replace$ ?sorted ?i ?i ?obra2))
+            (bind ?sorted (replace$ ?sorted ?j ?j ?obra1))
+         )
+         (bind ?j (+ ?j 1))
+      )
+      (bind ?i (+ ?i 1))
+   )
+   ?sorted
+)
+
+;; 6. Reglas
+;; (a) Módulos de preguntas.
+(defrule getInput::InicializarDatosVisita
+    (declare (salience 10))
+    =>
+    (assert (datosVisita 
+        (Npersonas_visita 0)
+        (Conocimiento_visita 0)
+        (Ndias_visita 0)
+        (Duracion_visita 0)
+        (Hay_peques_visita FALSE)
+    ))
+    (assert (preferenciasVisita))
+)
+
+(defrule getInput::preguntaNumeroPersonas
+    (declare (salience 9))
+    ?fact <- (datosVisita (Npersonas_visita 0))
+    =>
+    (bind ?pregunta "¿Cuantas personas van a visitar el museo? ")
+    (bind ?respuesta (pregunta_numero ?pregunta))
+    (modify ?fact (Npersonas_visita ?respuesta))
+)
+
+(defrule getInput::pregunta_peques
+    (declare (salience 8))
+    ?fact <- (datosVisita (Hay_peques_visita FALSE)) 
+    (not (peques_preguntado))
+    =>
+    (bind ?pregunta "¿Van a ir niños pequeños? ")
+    (bind ?respuesta (pregunta_boolean ?pregunta))
+    (modify ?fact (Hay_peques_visita ?respuesta))
+    (assert (peques_preguntado))
+)
+
+(defrule getInput::Ndias_visita
+    (declare (salience 7))
+    ?fact <- (datosVisita (Ndias_visita 0))
+    =>
+    (bind ?pregunta "¿Cuantos dias va a durar la visita? ")
+    (bind ?respuesta (pregunta_numero ?pregunta))
+    (modify ?fact (Ndias_visita ?respuesta))
+)
+
+(defrule getInput::Duracion_visita
+    (declare (salience 6))
+    ?fact <- (datosVisita (Duracion_visita 0))
+    =>
+    (bind ?pregunta "¿Cuantas horas por dia va a durar la visita? ")
+    (bind ?respuesta (pregunta_numero ?pregunta))
+    (modify ?fact (Duracion_visita ?respuesta))
+)
+
+(defrule getInput::pregunta_conocimiento
+    (declare (salience 5))
+    ?fact <- (datosVisita (Conocimiento_visita 0))
+    =>
+    (bind ?pregunta "¿Cuanto conocimiento tienen sobre arte? [1-10]")
+    (bind ?respuesta (pregunta_numero_con_rango ?pregunta 1 10))
+    (modify ?fact (Conocimiento_visita ?respuesta))
+)
+
+(defrule getInput::preguntaPreferencias
+    (declare (salience 4))
+    ?fact <- (datosVisita (Tematica $?tematicas) (Epoca $?epocas) (Estilo $?estilos) (Pintor $?pintores))
+    (not (preferencias_preguntadas))
+    =>
+    ;; 1. Preguntar si el usuario tiene alguna preferencia general
+    (bind ?pregunta "¿Tiene alguna preferencia en cuanto a las obras? ")
+    (bind ?respuesta (pregunta_boolean ?pregunta))
+    
+    (if (eq ?respuesta TRUE) then
+        ;; 2. Preguntar por cada tipo de preferencia
+        
+        (bind ?tematica nil)
+        (bind ?epoca nil)
+        (bind ?estilo nil)
+        (bind ?pintor nil)
+
+        ; 2.1. Temática
+        (bind ?pregunta "¿Tiene alguna preferencia en cuanto a la temática de las obras? ")
+        (bind ?respuestaTematica (pregunta_boolean ?pregunta))
+        (if (eq ?respuestaTematica TRUE) then
+
+            (bind $?allTematicas (find-all-instances ((?inst Tematica)) TRUE)) ;Coge todas las instancias que sean Estilo
+            
+            (progn$ (?tematica ?allTematicas)  ;Rellena la lista con los nombres de los estilos
+                (bind ?nombre (send ?tematica get-Nombre))
+                (bind $?tematicas (insert$ $?tematicas ?tematica-index ?nombre)) ;Inserta el nombre del estilo en la ultima posicion vacia de la lista
+            ) 
+            ; TODO Tener multiples tematicas
+            (bind $?indices_tematicas (pregunta_opcion_unica "Tematica que prefiere ver" $?tematicas))
+            ; (bind ?preferencias_tematicas (create$ ))
+
+            ; (progn$ (?i ?indices_estilos)  ;Escoge el estilo a partir del indice que se ha preguntado
+            ;     (bind ?tematica (nth$ ?i ?allTematicas)) ;Estilo del indice de los diferentes inputs de la pegunta
+            ;     (bind ?preferencias_tematicas (insert$ ?preferencias_tematicas ?i-index ?tematica)) ;Inserta el estilo del indice insertado al hacer la pregunta
+            ;     (printout t "aaaa" ?preferencias_tematicas)
+            ; )
+            (bind ?tematica (nth$ ?indices_tematicas $?allTematicas))
+        )
+
+        (readline)
+
+        ;; 2.2. Época
+        (bind ?pregunta "¿Tiene alguna preferencia en cuanto a la época de las obras? ")
+        (bind ?respuestaEpoca (pregunta_boolean ?pregunta))
+        
+        (if (eq ?respuestaEpoca TRUE) then
+        
+            (bind $?allEpocas (find-all-instances ((?inst Epoca)) TRUE)) ;Coge todas las instancias que sean Estilo
+            
+            (progn$ (?epoca ?allEpocas)  ;Rellena la lista con los nombres de los estilos
+                (bind ?nombre (send ?epoca get-Nombre))
+                (bind $?epocas (insert$ $?epocas ?epoca-index ?nombre)) ;Inserta el nombre del estilo en la ultima posicion vacia de la lista
+            ) 
+            ; TODO Tener multiples epocas
+            (bind $?indices_epoca (pregunta_opcion_unica "Epocas que prefiere ver" $?epocas))
+
+            ; (bind ?preferencias_tematicas (create$ ))
+
+            ; (progn$ (?i ?indices_estilos)  ;Escoge el estilo a partir del indice que se ha preguntado
+            ;     (bind ?tematica (nth$ ?i ?allTematicas)) ;Estilo del indice de los diferentes inputs de la pegunta
+            ;     (bind ?preferencias_tematicas (insert$ ?preferencias_tematicas ?i-index ?tematica)) ;Inserta el estilo del indice insertado al hacer la pregunta
+            ; )
+            (bind ?epoca (nth$ ?indices_epoca $?allEpocas))
+        )
+
+        (readline)
+        
+        ;; 2.3. Estilo
+
+        (bind ?pregunta "¿Tiene alguna preferencia en cuanto al estilo de las obras?")
+        (bind ?respuestaEstilo (pregunta_boolean ?pregunta))
+        (if (eq ?respuestaEstilo TRUE) then
+
+            (bind $?allEstilos (find-all-instances ((?inst Estilo)) TRUE)) ;Coge todas las instancias que sean Estilo
+            
+            (progn$ (?estilo ?allEstilos)  ;Rellena la lista con los nombres de los estilos
+                (bind ?nombre (send ?estilo get-Nombre))
+                (bind $?estilos (insert$ $?estilos ?estilo-index ?nombre)) ;Inserta el nombre del estilo en la ultima posicion vacia de la lista
+            ) 
+            ; TODO Tener multiples estilos
+            (bind ?pregunta "¿Cuál es su preferencia en cuanto al estilo de las obras? ")
+            (bind $?indices_estilos (pregunta_opcion_unica ?pregunta $?allEstilos))
+            (bind ?estilo (nth$ ?indices_estilos $?allEstilos))
+        )
+
+        (readline)
+        
+        ;; 2.4. Pintor
+        (bind ?pregunta "¿Tiene alguna preferencia en cuanto al pintor de las obras?")
+        (bind ?respuestaPintor (pregunta_boolean ?pregunta))
+        (if (eq ?respuestaPintor TRUE) then
+
+            (bind $?allPintores (find-all-instances ((?inst Pintor)) TRUE)) ;Coge todas las instancias que sean Estilo
+            
+            (progn$ (?pintor ?allPintores)  ;Rellena la lista con los nombres de los estilos
+                (bind ?nombre (send ?pintor get-Nombre))
+                (bind $?pintores (insert$ $?pintores ?pintor-index ?nombre)) ;Inserta el nombre del estilo en la ultima posicion vacia de la lista
+            ) 
+            ; TODO Tener multiples pintores
+            (bind $?indices_pintores (pregunta_opcion_unica "Pintor que prefiere ver" $?pintores))
+        
+            (bind ?pintor (nth$ ?indices_pintores $?allPintores))
+        )
+        (readline)
+        
+        (modify ?fact (Tematica ?tematica) (Epoca ?epoca) (Estilo ?estilo) (Pintor ?pintor))
+
+    else 
+        (modify ?fact (Tematica nil) (Epoca nil) (Estilo nil) (Pintor nil))
+    
+    )
+    
+    (assert (preferencias_preguntadas))
+    
+    ;; 3. Enfocar en el módulo de abstracción para procesar las preferencias
+    (focus abstraccion)
+)
+
+;; Reglas de abstracción 
+
+(defrule abstraccion::abstraccionGrupo
+    (declare (salience 10))
+    ?fact <- (datosVisita (Npersonas_visita ?n))
+    
+    =>
+    (if (= ?n 1) then
+        (bind ?n-categoria "Individual")
+    else 
+        (if (<= ?n 3) then
+            (bind ?n-categoria "Pequeño")
+        else 
+            (if (<= ?n 6) then
+                (bind ?n-categoria "Mediano")
+            else
+                (bind ?n-categoria "Grande")
+            )
+        )
+    )
+    ;(printout t "Abstracion grupo" crlf)
+    (bind ?visita (make-instance visita of Visita))
+    (send ?visita put-Npersonas_visita ?n-categoria)
+)
+
+(defrule abstraccion::abstraccionConocimiento
+    (declare (salience 9))
+    ?fact <- (datosVisita (Conocimiento_visita ?nivel))
+    (not (conocimientoAbstraido))
+    ?visita <- (object (is-a Visita))
+    =>
+    (bind ?c-categoria (if (< ?nivel 3) then "Poco" else (if (< ?nivel 7) then "Medio" else "Mucho")))
+    (send ?visita put-Conocimiento_visita ?c-categoria)
+    ;(printout t "Abstracion conocimiento" crlf)
+    (assert (conocimientoAbstraido))
+)
+
+(defrule abstraccion::abstraccionDiasVisita
+    (declare (salience 8))
+    ?fact <- (datosVisita (Ndias_visita ?d))
+    (not (diasAbstraidos))
+    ?visita <- (object (is-a Visita))
+    
+    =>
+    (bind ?d-categoria (if (< ?d 2) then "Pocos" else (if (< ?d 3) then "Medio" else "Muchos")))
+    (send ?visita put-Ndias_visita ?d-categoria)
+    ;(printout t "Abstracion dias" crlf)
+    (assert (diasAbstraidos))
+)
+
+(defrule abstraccion::abstraccionDuracionVisita
+    (declare (salience 7))
+    ?fact <- (datosVisita (Duracion_visita ?h))
+    (not (duracionAbstraida))
+    ?visita <- (object (is-a Visita))
+    =>
+    (bind ?h-categoria (if (< ?h 2) then "Pocas" else (if (< ?h 4) then "Media" else "Muchas")))
+    (send ?visita put-Duracion_visita ?h-categoria)
+    ;(printout t "Abstracion duracion" crlf)
+    (assert (duracionAbstraida))
+)
+
+(defrule abstraccion::abstraccionPeques 
+    (declare (salience 6))
+    ?fact <- (datosVisita (Hay_peques_visita ?p))
+    (not (pequesAbstraidos))
+    ?visita <- (object (is-a Visita))
+    =>
+    (bind ?p-categoria (if (eq ?p TRUE) then "Sí" else "No"))
+    ;(printout t "Abstracion peques" crlf)
+    (send ?visita put-Hay_peques_visita ?p-categoria)
+    (assert (pequesAbstraidos))
+)
+
+(defrule abstraccion::abstraccionPreferenciasVisita
+    (declare (salience 5))
+    ?fact <- (datosVisita (Tematica ?t) (Epoca ?e) (Estilo ?es) (Pintor ?p))
+    (not (preferenciasAbstraidas))
+    ?visita <- (object (is-a Visita))
+    =>
+    ; Si no hay ninguna preferencia, crear una preferencia vacía
+    (if (and (eq ?t nil) (eq ?e nil) (eq ?es nil) (eq ?p nil)) 
+    then
+        ;(printout t "No hay preferencias" crlf)
+        (bind ?preferencia (make-instance [preferencia] of Preferencia))
+    else
+        ; Crear preferencia con los valores existentes
+        (bind ?preferencia (make-instance [preferencia] of Preferencia))
+        (if (neq ?t nil) then (send ?preferencia put-preferencia_de_tematica ?t))
+        (if (neq ?e nil) then (send ?preferencia put-preferencia_de_epoca ?e))
+        (if (neq ?es nil) then (send ?preferencia put-preferencia_de_estilo ?es))
+        (if (neq ?p nil) then (send ?preferencia put-preferencia_de_pintor ?p))
+    )
+    ; Asignar la preferencia a la visita
+    (send ?visita put-vista_tiene_preferencia ?preferencia)
+    (assert (preferenciasAbstraidas))
+    ;(printout t "Abstracion preferencias" crlf)
+)
+
+(defrule abstraccion::abstraccionFinal
+    (declare (salience 4))
+    =>
+    (focus asociacionHeuristica)
+)
+
+;; Reglas de asociación heurística
+(defrule asociacionHeuristica::buscar-preferencias-visita
+    (declare (salience 10))
+    ?visita <- (object (is-a Visita))
+    =>
+    ;(printout t "Ejecutando buscar-preferencias-visita" crlf)
+    
+    ; Obtener todas las obras
+    (do-for-all-instances ((?obra Obra)) TRUE
+        (bind ?prioridad 0)
+        
+        ; Obtener la preferencia antes de usarla
+        (bind $?preferencias (send ?visita get-vista_tiene_preferencia))
+        (if (> (length$ $?preferencias) 0) then
+            (bind ?preferencia (nth$ 1 $?preferencias))
+            ;(printout t "Procesando preferencia: " ?preferencia crlf)
+            
+            ; Obtener valores específicos de la preferencia
+            (bind $?pref_epoca (send ?preferencia get-preferencia_de_epoca))
+            (bind $?pref_estilo (send ?preferencia get-preferencia_de_estilo))
+            (bind $?pref_pintor (send ?preferencia get-preferencia_de_pintor))
+            (bind $?pref_tematica (send ?preferencia get-preferencia_de_tematica))
+
+            ;(printout t "Preferencias: " ?pref_epoca " " ?pref_estilo " " ?pref_pintor " " ?pref_tematica crlf)
+            
+            ; Verificar coincidencias
+            (if (and (neq $?pref_epoca (create$)) 
+                     (member$ (send ?obra get-obra_tiene_epoca) $?pref_epoca))
+            then 
+                (bind ?prioridad (+ ?prioridad 10)))
+                
+            (if (and (neq $?pref_estilo (create$)) 
+                     (member$ (send ?obra get-obra_tiene_estilo) $?pref_estilo))
+            then 
+                (bind ?prioridad (+ ?prioridad 10)))
+                
+            (if (and (neq $?pref_pintor (create$)) 
+                     (member$ (send ?obra get-obra_tiene_pintor) $?pref_pintor))
+            then 
+                (bind ?prioridad (+ ?prioridad 10)))
+                
+            (if (and (neq $?pref_tematica (create$)) 
+                     (member$ (send ?obra get-obra_tiene_tematica) $?pref_tematica))
+            then 
+                (bind ?prioridad (+ ?prioridad 10)))
+        )
+
+        ; Comparar importancia
+        (bind ?importancia (send ?obra get-Importancia))
+        (if (eq ?importancia 3) then 
+            (bind ?prioridad (+ ?prioridad 5))
+        else (if (eq ?importancia 2) then 
+            (bind ?prioridad (+ ?prioridad 3))
+        else (if (eq ?importancia 1) then 
+            (bind ?prioridad (+ ?prioridad 1))
+        )))
+
+        ; Crear el hecho con la prioridad calculada
+        (assert (Obra_Preferente 
+            (Obra ?obra)
+            (Prioridad ?prioridad)
+            (Sala (send ?obra get-Sala))
+            (Duracion 0.25)))
+    )
+)
+
+
+(defrule asociacionHeuristica::crear-y-ordenar-ruta
+    (declare (salience 8))
+    ?visita <- (object (is-a Visita) (Duracion_visita ?tiempo_visita))
+    =>
+    ; 1. Obtener obras ordenadas por prioridad
+    (bind $?prioridades (find-all-facts ((?f Obra_Preferente)) TRUE))
+    (bind $?prioridades-ordenadas (sort-by-prioridad $?prioridades))
+    (bind $?ruta (create$))
+    
+    ; 2. Calcular tiempo disponible
+    (bind ?tiempo_str (send ?visita get-Duracion_visita))
+    (bind ?tiempo_numerico 
+        (if (eq ?tiempo_str "Pocas") then 2
+        else (if (eq ?tiempo_str "Media") then 4
+        else 6)))
+    
+    (bind ?tiempoRestante ?tiempo_numerico)
+    ;(printout t "Creando ruta con tiempo: " ?tiempoRestante " horas" crlf)
+
+    ; 3. Crear ruta inicial con obras prioritarias
+    (foreach ?obra $?prioridades-ordenadas
+        (if (> ?tiempoRestante 0) then 
+            (bind ?duracion (fact-slot-value ?obra Duracion))
+            (bind ?obra_actual (fact-slot-value ?obra Obra))
+            (if (<= ?duracion ?tiempoRestante) then
+                (bind ?tiempoRestante (- ?tiempoRestante ?duracion))
+                (bind $?ruta (insert$ $?ruta (+ (length$ $?ruta) 1) ?obra_actual))
+            )
+        )
+    )
+    
+    ; 4. Ordenar ruta final por sala
+    (bind $?rutaOrdenada (sort-by-sala $?ruta))
+    (assert (Ruta (Obras $?rutaOrdenada)))
+    (focus showResultado)
+)
+
+;; Reglas de impresión del resultado
+(deftemplate showResultado::contador
+    (slot count (type INTEGER))
+)
+
+(deffacts showResultado::hechos-iniciales
+    (contador (count 1))
+)
+
+(defrule showResultado::imprimir-cabecera
+    (declare (salience 10))
+    =>
+    (printout t crlf)
+    (printout t "-------------------------------------------------------------" crlf)
+    (printout t "-------------------- Resultados de la Ruta ------------------" crlf)
+    (printout t "-------------------------------------------------------------" crlf)
+    (printout t "---------------- Sala - Obra - Autor - Tiempo ---------------" crlf)
+    (printout t crlf)
+)
+
+; 2. Corregir la regla de impresión
+(defrule showResultado::imprimir-resultado
+    ?contador <- (contador (count ?n))
+    ?ruta <- (Ruta (Obras $?obras))
+    =>
+    (if (<= ?n (length$ $?obras)) then
+        (bind ?obra (nth$ ?n $?obras))
+        (bind ?sala (send ?obra get-Sala))
+        (bind ?nombre (send ?obra get-Nombre))
+        ;Obtener el pintor de la obra
+        (bind ?pintor-obj (send ?obra get-obra_tiene_pintor))
+        (bind ?nombre-pintor (send ?pintor-obj get-Nombre))
+        ; Obtener la temática
+        (bind ?tematica-obj (send ?obra get-obra_tiene_tematica))
+        (bind ?nombre-tematica (send ?tematica-obj get-Nombre))
+        (bind ?importancia (send ?obra get-Importancia))
+        (printout t crlf)
+        (format t "Sala: %d - Obra: %s - Pintor: %s - Tematica: %s"
+                ?sala ?nombre ?nombre-pintor ?nombre-tematica)
+        (printout t crlf)
+        (printout t crlf)
+        
+        (modify ?contador (count (+ ?n 1)))
+    )
+)
+
+;TODO Calcular la duracion de cada obra
+
+ 

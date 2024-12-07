@@ -243,7 +243,7 @@
                                                                                                     rdfs:subPropertyOf owl:topDataProperty ;
                                                                                                     rdf:type owl:FunctionalProperty ;
                                                                                                     rdfs:domain <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Visita> ;
-                                                                                                    rdfs:range xsd:int .
+                                                                                                    rdfs:range xsd:string .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Sala
@@ -290,17 +290,12 @@
 #    Individuals
 #################################################################
 
-###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC#Reflejo
-:Reflejo rdf:type owl:NamedIndividual ,
-                  <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
-         <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :Cisnes_reflejando_elefantes .
-
-
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Alegoria
 :Alegoria rdf:type owl:NamedIndividual ,
                    <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :El_Esclavo_Moribundo ,
-                                                                                                                 :El_Leon_de_Monzon .
+                                                                                                                 :El_Leon_de_Monzon ;
+          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Alegoria" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Alejandro_de_Antioquia
@@ -314,13 +309,15 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Art_Nouveau
 :Art_Nouveau rdf:type owl:NamedIndividual ,
                       <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Estilo> ;
-             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :El_Beso .
+             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :El_Beso ;
+             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Art Nouveau" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Asirio
 :Asirio rdf:type owl:NamedIndividual ,
                  <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Estilo> ;
-        <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :Los_Toros_Alados .
+        <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :Los_Toros_Alados ;
+        <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Asirio" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Barroco
@@ -330,7 +327,8 @@
                                                                                                               :La_Encajera ,
                                                                                                               :La_joven_de_la_perla ,
                                                                                                               :Las_Meninas ,
-                                                                                                              :Los_Caballos_de_Marly .
+                                                                                                              :Los_Caballos_de_Marly ;
+         <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Barroco" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Chica_frente_a_un_espejo
@@ -370,7 +368,8 @@
                        <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
               <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :El_Bano_Turco ,
                                                                                                                      :El_Tahur ,
-                                                                                                                     :La_Encajera .
+                                                                                                                     :La_Encajera ;
+              <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Costumbrista" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Cubismo
@@ -378,7 +377,8 @@
                   <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Estilo> ;
          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :Chica_frente_a_un_espejo ,
                                                                                                               :Guernica ,
-                                                                                                              :Las_senoritas_de_Avignon .
+                                                                                                              :Las_senoritas_de_Avignon ;
+         <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Cubismo" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Desconocido
@@ -406,7 +406,8 @@
 :Egipcio rdf:type owl:NamedIndividual ,
                   <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Estilo> ;
          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :El_Escriba_Sentado ,
-                                                                                                              :La_Momia .
+                                                                                                              :La_Momia ;
+         <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Egipcio" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/El_Bano_Turco
@@ -416,12 +417,12 @@
                <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_estilo> :Neoclasicismo ;
                <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_pintor> :JeanAugusteDominique_Ingres ;
                <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_tematica> :Costumbrista ;
-               <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Complejidad> 4 ,
-                                                                                                              "El baño turco" ;
+               <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Complejidad> 4 ;
                <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Data_creacion> 1862 ;
                <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Dimensiones_alto> 110 ;
                <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Dimensiones_largo> 110 ;
                <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Importancia> 2 ;
+               <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "El baño turco" ;
                <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Sala> 4 .
 
 
@@ -588,19 +589,22 @@
 :Expresionismo rdf:type owl:NamedIndividual ,
                         <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Estilo> ;
                <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :El_Grito ,
-                                                                                                                    :Las_Aves .
+                                                                                                                    :Las_Aves ;
+               <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Expresionismo" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Expresionista
 :Expresionista rdf:type owl:NamedIndividual ,
                         <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
-               <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :El_Grito .
+               <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :El_Grito ;
+               <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Expresionista" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Fantástico
 :Fantástico rdf:type owl:NamedIndividual ,
                      <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
-            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :Los_elefantes .
+            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :Los_elefantes ;
+            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Fantastico" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Gabrielle_d_Estrees_y_Su_Hermana
@@ -638,7 +642,8 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Gotico
 :Gotico rdf:type owl:NamedIndividual ,
                  <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Estilo> ;
-        <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :El_Leon_de_Monzon .
+        <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :El_Leon_de_Monzon ;
+        <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Gotico" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Griego_Helenistico
@@ -646,7 +651,8 @@
                              <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Estilo> ;
                     <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :La_Venus_de_Milo ,
                                                                                                                          :La_Victoria_de_Samotracia ,
-                                                                                                                         :Las_Bodas_de_Cana .
+                                                                                                                         :Las_Bodas_de_Cana ;
+                    <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Griego Helenistico" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Guernica
@@ -655,7 +661,7 @@
           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_epoca> :Siglo_XX ;
           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_estilo> :Cubismo ;
           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_pintor> :Pablo_Picasso ;
-          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_tematica> :Histórico ;
+          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_tematica> :Historico ;
           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Complejidad> 5 ;
           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Data_creacion> 1937 ;
           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Dimensiones_alto> 349.3 ;
@@ -692,15 +698,11 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Historico
 :Historico rdf:type owl:NamedIndividual ,
                     <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
-           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :La_Libertad_Guiando_al_Pueblo ,
+           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :Guernica ,
+                                                                                                                  :La_Libertad_Guiando_al_Pueblo ,
                                                                                                                   :La_Momia ,
-                                                                                                                  :La_consagracion_de_Napoleon .
-
-
-###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Histórico
-:Histórico rdf:type owl:NamedIndividual ,
-                    <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
-           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :Guernica .
+                                                                                                                  :La_consagracion_de_Napoleon ;
+           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Historico" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/JacquesLouis_David
@@ -724,8 +726,7 @@
                            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Pintor> ;
                   <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#pintor_tiene_obra> :La_Encajera ,
                                                                                                                        :La_joven_de_la_perla ;
-                  <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nacionalidad> "Holandes" ,
-                                                                                                                  "Holandés" ;
+                  <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nacionalidad> "Holandés" ;
                   <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Johannes Vermeer" .
 
 
@@ -800,11 +801,11 @@
           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_estilo> :Egipcio ;
           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_pintor> :Desconocido ;
           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_tematica> :Historico ;
-          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Complejidad> 2 ,
-                                                                                                         "La momia" ;
-          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Dimensiones_alto> -2500 ,
-                                                                                                              160 ;
+          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Complejidad> 2 ;
+          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Data_creacion> -2500 ;
+          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Dimensiones_alto> 160 ;
           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Importancia> 2 ;
+          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "La momia" ;
           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Sala> 1 ;
           rdfs:comment "Esta obra es una estatua" .
 
@@ -1078,7 +1079,8 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Mannerismo
 :Mannerismo rdf:type owl:NamedIndividual ,
                      <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Estilo> ;
-            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :El_caballero_de_la_mano_en_el_pecho .
+            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :El_caballero_de_la_mano_en_el_pecho ;
+            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Mannerismo" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/MiguelAngel_Buonarroti
@@ -1096,13 +1098,15 @@
                                                                                                                    :El_jardin_de_las_delicias ,
                                                                                                                    :La_Venus_de_Milo ,
                                                                                                                    :La_Victoria_de_Samotracia ,
-                                                                                                                   :Los_Toros_Alados .
+                                                                                                                   :Los_Toros_Alados ;
+            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Mitologico" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Modernismo
 :Modernismo rdf:type owl:NamedIndividual ,
                      <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
-            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :Las_senoritas_de_Avignon .
+            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :Las_senoritas_de_Avignon ;
+            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Modernismo" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Munch
@@ -1117,14 +1121,16 @@
 :Naturaleza rdf:type owl:NamedIndividual ,
                      <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :Las_Aves ,
-                                                                                                                   :Los_Caballos_de_Marly .
+                                                                                                                   :Los_Caballos_de_Marly ;
+            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Naturaleza" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Neoclasicismo
 :Neoclasicismo rdf:type owl:NamedIndividual ,
                         <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Estilo> ;
                <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :El_Bano_Turco ,
-                                                                                                                    :La_consagracion_de_Napoleon .
+                                                                                                                    :La_consagracion_de_Napoleon ;
+               <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Neoclasicismo" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Nighthawks
@@ -1133,8 +1139,7 @@
             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_epoca> :Siglo_XX ;
             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_estilo> :Realismo_Moderno ;
             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_pintor> :Edward_Hopper ;
-            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_tematica> :Soledad ,
-                                                                                                                   :Urbano ;
+            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#obra_tiene_tematica> :Soledad ;
             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Complejidad> 4 ;
             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Data_creacion> 1942 ;
             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Dimensiones_alto> 80 ;
@@ -1158,7 +1163,8 @@
 :Paisaje rdf:type owl:NamedIndividual ,
                   <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :La_Noche_Estrellada ,
-                                                                                                                :Los_girasoles .
+                                                                                                                :Los_girasoles ;
+         <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Paisaje" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Paolo_Veronese
@@ -1174,17 +1180,22 @@
                             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Estilo> ;
                    <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :La_Noche_Estrellada ,
                                                                                                                         :La_terraza_del_café_por_la_noche ,
-                                                                                                                        :Los_girasoles .
+                                                                                                                        :Los_girasoles ;
+                   <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "PostImpresionismo" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Realismo_Moderno
 :Realismo_Moderno rdf:type owl:NamedIndividual ,
                            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Estilo> ;
-                  <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :Nighthawks .
+                  <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :Nighthawks ;
+                  <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Realismo morderno" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Reflejo
-:Reflejo rdf:type owl:NamedIndividual .
+:Reflejo rdf:type owl:NamedIndividual ,
+                  <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
+         <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :Cisnes_reflejando_elefantes ;
+         <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Reflejo" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Religioso
@@ -1192,7 +1203,8 @@
                     <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :El_caballero_de_la_mano_en_el_pecho ,
                                                                                                                   :La_ultima_cena ,
-                                                                                                                  :Las_Bodas_de_Cana .
+                                                                                                                  :Las_Bodas_de_Cana ;
+           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Religioso" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Renacimiento
@@ -1204,7 +1216,8 @@
                                                                                                                    :Gabrielle_d_Estrees_y_Su_Hermana ,
                                                                                                                    :La_Gioconda ,
                                                                                                                    :La_ultima_cena ,
-                                                                                                                   :Retrato_de_una_Joven .
+                                                                                                                   :Retrato_de_una_Joven ;
+              <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Renacimiento" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Retrato
@@ -1216,7 +1229,8 @@
                                                                                                                 :La_Gioconda ,
                                                                                                                 :La_joven_de_la_perla ,
                                                                                                                 :Las_Meninas ,
-                                                                                                                :Retrato_de_una_Joven .
+                                                                                                                :Retrato_de_una_Joven ;
+         <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Retrato" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Retrato_de_una_Joven
@@ -1239,7 +1253,8 @@
 :Romanticismo rdf:type owl:NamedIndividual ,
                        <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Estilo> ;
               <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :La_Balsa_dela_Medusa ,
-                                                                                                                   :La_Libertad_Guiando_al_Pueblo .
+                                                                                                                   :La_Libertad_Guiando_al_Pueblo ;
+              <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Romanticismo" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Salvador_Dali
@@ -1265,19 +1280,22 @@
 :Siglo_II_aC rdf:type owl:NamedIndividual ,
                       <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Epoca> ;
              <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#epoca_tiene_obra> :La_Venus_de_Milo ,
-                                                                                                                 :La_Victoria_de_Samotracia .
+                                                                                                                 :La_Victoria_de_Samotracia ;
+             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Siglo II a.C" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Siglo_IX_aC
 :Siglo_IX_aC rdf:type owl:NamedIndividual ,
                       <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Epoca> ;
-             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#epoca_tiene_obra> :Los_Toros_Alados .
+             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#epoca_tiene_obra> :Los_Toros_Alados ;
+             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Siglo IX a.C" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Siglo_XII
 :Siglo_XII rdf:type owl:NamedIndividual ,
                     <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Epoca> ;
-           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#epoca_tiene_obra> :El_Leon_de_Monzon .
+           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#epoca_tiene_obra> :El_Leon_de_Monzon ;
+           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Siglo XII" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Siglo_XIX
@@ -1289,7 +1307,8 @@
                                                                                                                :La_Noche_Estrellada ,
                                                                                                                :La_consagracion_de_Napoleon ,
                                                                                                                :La_terraza_del_café_por_la_noche ,
-                                                                                                               :Los_girasoles .
+                                                                                                               :Los_girasoles ;
+           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Siglo XIX" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Siglo_XV
@@ -1299,7 +1318,8 @@
                                                                                                               :El_jardin_de_las_delicias ,
                                                                                                               :La_Gioconda ,
                                                                                                               :La_ultima_cena ,
-                                                                                                              :Retrato_de_una_Joven .
+                                                                                                              :Retrato_de_una_Joven ;
+          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Siglo XV" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Siglo_XVI
@@ -1308,7 +1328,8 @@
            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#epoca_tiene_obra> :El_Esclavo_Moribundo ,
                                                                                                                :El_caballero_de_la_mano_en_el_pecho ,
                                                                                                                :Gabrielle_d_Estrees_y_Su_Hermana ,
-                                                                                                               :Las_Bodas_de_Cana .
+                                                                                                               :Las_Bodas_de_Cana ;
+           <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Siglo XVI" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Siglo_XVII
@@ -1317,13 +1338,15 @@
             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#epoca_tiene_obra> :El_Tahur ,
                                                                                                                 :La_Encajera ,
                                                                                                                 :La_joven_de_la_perla ,
-                                                                                                                :Las_Meninas .
+                                                                                                                :Las_Meninas ;
+            <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Siglo XVII" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Siglo_XVIII
 :Siglo_XVIII rdf:type owl:NamedIndividual ,
                       <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Epoca> ;
-             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#epoca_tiene_obra> :Los_Caballos_de_Marly .
+             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#epoca_tiene_obra> :Los_Caballos_de_Marly ;
+             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Siglo XVIII" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Siglo_XX
@@ -1337,20 +1360,23 @@
                                                                                                               :Las_Aves ,
                                                                                                               :Las_senoritas_de_Avignon ,
                                                                                                               :Los_elefantes ,
-                                                                                                              :Nighthawks .
+                                                                                                              :Nighthawks ;
+          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Siglo XX" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Siglo_XXVI_aC
 :Siglo_XXVI_aC rdf:type owl:NamedIndividual ,
                         <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Epoca> ;
                <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#epoca_tiene_obra> :El_Escriba_Sentado ,
-                                                                                                                   :La_Momia .
+                                                                                                                   :La_Momia ;
+               <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Siglo XXVI a.C" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Soledad
 :Soledad rdf:type owl:NamedIndividual ,
                   <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
-         <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :Nighthawks .
+         <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :Nighthawks ;
+         <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Soledad" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Surrealismo
@@ -1358,13 +1384,15 @@
                       <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Estilo> ;
              <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#estilo_tiene_obra> :Cisnes_reflejando_elefantes ,
                                                                                                                   :La_persistencia_de_la_memoria ,
-                                                                                                                  :Los_elefantes .
+                                                                                                                  :Los_elefantes ;
+             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Surrealismo" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Surrealista
 :Surrealista rdf:type owl:NamedIndividual ,
                       <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
-             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :La_persistencia_de_la_memoria .
+             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :La_persistencia_de_la_memoria ;
+             <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Surrealista" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Theodore_Gericault
@@ -1378,14 +1406,15 @@
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Tragedia
 :Tragedia rdf:type owl:NamedIndividual ,
                    <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
-          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :La_Balsa_dela_Medusa .
+          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :La_Balsa_dela_Medusa ;
+          <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Tragedia" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/Urbano
 :Urbano rdf:type owl:NamedIndividual ,
                  <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Tematica> ;
-        <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :La_terraza_del_café_por_la_noche ,
-                                                                                                               :Nighthawks .
+        <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#tematica_tiene_obra> :La_terraza_del_café_por_la_noche ;
+        <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "Urbano" .
 
 
 ###  http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/Ontologia_SBC/VanGogh
