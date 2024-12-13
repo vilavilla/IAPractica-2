@@ -469,6 +469,7 @@
                     <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Data_creacion> -2480 ;
                     <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Dimensiones_alto> 54 ;
                     <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nacionalidad> 2 ;
+                    <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Importancia> 2 ;
                     <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Nombre> "El escriba sentado" ;
                     <http://www.semanticweb.org/joan.vila.orus/ontologies/2024/10/untitled-ontology-2#Sala> 1 .
 
