@@ -996,11 +996,9 @@
          (Nacionalidad  "Español")
          (Nombre  "Diego Velázquez")
     )
-
 )
 
 ;;2. Exportación del MAIN y definicion módulos
-
 (defmodule MAIN (export ?ALL) )
 
 (defmodule getInput (import MAIN ?ALL) (export ?ALL) )
@@ -1035,11 +1033,6 @@
     (multislot Pintor)
 )
 
-(deftemplate ResultadoFinal
-    (slot descripcion (type STRING) (default "Resultado final"))
-    (slot valor (type INTEGER) (default 0))
-)
-
 (deftemplate MAIN::Obra_Preferente
     (slot Obra) 
     (slot Prioridad) 
@@ -1056,15 +1049,18 @@
     (multislot Obras)
 )
 
-;; 5. Funciones
+(deftemplate showResultado::contador
+    (slot count (type INTEGER))
+)
 
-(deffunction MAIN::pregunta_numero (?pregunta)
+;; 5. Funciones
+(deffunction getInput::pregunta_numero (?pregunta)
     (printout t ?pregunta)
     (bind ?respuesta (read))
     ?respuesta
 )
 
-(deffunction MAIN::pregunta_numero_con_rango (?pregunta ?min ?max)
+(deffunction getInput::pregunta_numero_con_rango (?pregunta ?min ?max)
     (format t "%s " ?pregunta)
     (bind ?respuesta (read))
     
@@ -1080,7 +1076,7 @@
     (return ?respuesta)
 )
 
-(deffunction MAIN::pregunta_boolean (?pregunta)
+(deffunction getInput::pregunta_boolean (?pregunta)
     (format t "%s[S/N] " ?pregunta)
     (bind ?respuesta (read))
 
@@ -1095,7 +1091,7 @@
     ) 
 )
 
-(deffunction MAIN::pregunta_opcion_unica (?pregunta $?opciones)
+(deffunction getInput::pregunta_opcion_unica (?pregunta $?opciones)
    (bind ?indice 1)
    (bind ?linea (format nil "%s" ?pregunta))
    (printout t ?linea crlf)
@@ -1111,7 +1107,7 @@
    (return ?resp)
 )
 
-(deffunction MAIN::pregunta_opcion_multiple (?pregunta $?opciones)
+(deffunction getInput::pregunta_opcion_multiple (?pregunta $?opciones)
    (printout t ?pregunta crlf)
    (loop-for-count (?i 1 (length$ ?opciones))
       (format t "  %d. %s%n" ?i (nth$ ?i ?opciones))
@@ -1135,7 +1131,7 @@
    ?indices
 )
 
-(deffunction MAIN::sort-by-sala (?obras)
+(deffunction asociacionHeuristica::sort-by-sala (?obras)
    (bind ?len (length$ ?obras))
    (bind ?sorted ?obras)
    
@@ -1163,7 +1159,7 @@
    ?sorted
 )
 
-(deffunction MAIN::sort-by-prioridad (?obras)
+(deffunction asociacionHeuristica::sort-by-prioridad (?obras)
    (bind ?len (length$ ?obras))
    (bind ?sorted ?obras)
    
@@ -1241,7 +1237,7 @@
     (bind ?respuesta (pregunta_numero_con_rango ?pregunta 1 6))
     (modify ?fact (Duracion_visita ?respuesta))
 )
-;TODO: Hacer el questionario para saber el conocimiento del usuario
+
 (defrule getInput::pregunta_conocimiento
     (declare (salience 5))
     ?fact <- (datosVisita (Conocimiento_visita 0))
@@ -1337,9 +1333,7 @@
      )
      (bind ?tematica $?preferencias_tematicas)
      )
-
         (readline)
-
 
           ;; 2.2. Época
           (bind ?pregunta "¿Tiene alguna preferencia en cuanto a la época de las obras? ")
@@ -1372,24 +1366,24 @@
           (bind ?pregunta "¿Tiene alguna preferencia en cuanto al estilo de las obras?")
           (bind ?respuestaEstilo (pregunta_boolean ?pregunta))
           (if (eq ?respuestaEstilo TRUE) then
-          (bind $?allEstilos (find-all-instances ((?inst Estilo)) TRUE))
-          (bind $?estilos (create$))
-          
-          (progn$ (?estilo ?allEstilos)
-               (bind ?nombre (send ?estilo get-Nombre))
-               (bind $?estilos (insert$ $?estilos (+ (length$ $?estilos) 1) ?nombre))
-          )
-          
-          (bind $?indices_estilos (pregunta_opcion_multiple "Estilos que prefiere ver:" $?estilos))
-          
-          (bind $?preferencias_estilo (create$))
-          (if (> (length$ $?indices_estilos) 0) then
-               (foreach ?i $?indices_estilos
-                    (bind ?estilo (nth$ ?i $?allEstilos))
-                    (bind $?preferencias_estilo (create$ $?preferencias_estilo ?estilo))
+               (bind $?allEstilos (find-all-instances ((?inst Estilo)) TRUE))
+               (bind $?estilos (create$))
+               
+               (progn$ (?estilo ?allEstilos)
+                    (bind ?nombre (send ?estilo get-Nombre))
+                    (bind $?estilos (insert$ $?estilos (+ (length$ $?estilos) 1) ?nombre))
                )
-          )
-          (bind ?estilo $?preferencias_estilo)
+               
+               (bind $?indices_estilos (pregunta_opcion_multiple "Estilos que prefiere ver:" $?estilos))
+               
+               (bind $?preferencias_estilo (create$))
+               (if (> (length$ $?indices_estilos) 0) then
+                    (foreach ?i $?indices_estilos
+                         (bind ?estilo (nth$ ?i $?allEstilos))
+                         (bind $?preferencias_estilo (create$ $?preferencias_estilo ?estilo))
+                    )
+               )
+               (bind ?estilo $?preferencias_estilo)
           )
 
           (readline)
@@ -1398,24 +1392,24 @@
           (bind ?pregunta "¿Tiene alguna preferencia en cuanto al pintor de las obras?")
           (bind ?respuestaPintor (pregunta_boolean ?pregunta))
           (if (eq ?respuestaPintor TRUE) then
-          (bind $?allPintores (find-all-instances ((?inst Pintor)) TRUE))
-          (bind $?pintores (create$))
-          
-          (progn$ (?pintor $?allPintores)
-               (bind ?nombre (send ?pintor get-Nombre))
-               (bind $?pintores (insert$ $?pintores (+ (length$ $?pintores) 1) ?nombre))
-          )
-          
-          (bind $?indices_pintores (pregunta_opcion_multiple "Pintores que prefiere ver:" $?pintores))
-          
-          (bind $?preferencias_pintor (create$))
-          (if (> (length$ $?indices_pintores) 0) then
-               (foreach ?i $?indices_pintores
-                    (bind ?pintor (nth$ ?i $?allPintores))
-                    (bind $?preferencias_pintor (create$ $?preferencias_pintor ?pintor))
+               (bind $?allPintores (find-all-instances ((?inst Pintor)) TRUE))
+               (bind $?pintores (create$))
+               
+               (progn$ (?pintor $?allPintores)
+                    (bind ?nombre (send ?pintor get-Nombre))
+                    (bind $?pintores (insert$ $?pintores (+ (length$ $?pintores) 1) ?nombre))
                )
-          )
-          (bind ?pintor $?preferencias_pintor)
+               
+               (bind $?indices_pintores (pregunta_opcion_multiple "Pintores que prefiere ver:" $?pintores))
+               
+               (bind $?preferencias_pintor (create$))
+               (if (> (length$ $?indices_pintores) 0) then
+                    (foreach ?i $?indices_pintores
+                         (bind ?pintor (nth$ ?i $?allPintores))
+                         (bind $?preferencias_pintor (create$ $?preferencias_pintor ?pintor))
+                    )
+               )
+               (bind ?pintor $?preferencias_pintor)
           )
         (readline)
         
@@ -1423,7 +1417,6 @@
 
     else 
         (modify ?fact (Tematica nil) (Epoca nil) (Estilo nil) (Pintor nil))
-    
     )
     
     (assert (preferencias_preguntadas))
@@ -1553,7 +1546,6 @@
         ; Ajustar si hay niños
         (if (eq (send ?visita get-Hay_peques_visita) TRUE) 
         then (bind ?duracion (* ?duracion 1.5)))
-
         
         ; Obtener preferencias
         (bind $?preferencias (send ?visita get-vista_tiene_preferencia))
@@ -1609,7 +1601,6 @@
             (Duracion ?duracion)))
     )
 )
-
 
 (defrule asociacionHeuristica::crear-y-ordenar-ruta
     (declare (salience 8))
@@ -1690,10 +1681,6 @@
 )
 
 ;; Reglas de impresión del resultado
-(deftemplate showResultado::contador
-    (slot count (type INTEGER))
-)
-
 (defrule showResultado::iniciar-contador
     (declare (salience 20))
     (not (exists (contador)))
