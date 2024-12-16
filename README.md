@@ -14,7 +14,7 @@ Este sistema experto implementado en CLIPS ayuda a generar recomendaciones perso
   - Temática artística
   - Época histórica
   - Estilo artístico
-  - Pintore
+  - Pintores
 
 ### 2. Base de Conocimiento
 El sistema incluye una extensa base de datos con:
