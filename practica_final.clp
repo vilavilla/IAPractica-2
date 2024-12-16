@@ -492,7 +492,7 @@
     ([La_Encajera] of Obra
          (obra_tiene_epoca  [Siglo_XVII])
          (obra_tiene_estilo  [Barroco])
-         (obra_tiene_pintor  [Georges_deLaTour])
+         (obra_tiene_pintor  [Johannes_Vermeer])
          (obra_tiene_tematica  [Costumbrista])
          (Complejidad  3)
          (Data_creacion  1669)
@@ -1254,7 +1254,7 @@
 	(bind ?respuesta (pregunta_opcion_unica "¿Conoces 'Las Meninas' de Velazquez?" ?formatos))
 	(if (= ?respuesta 1) then (bind ?puntuacion (+ 1 ?puntuacion )))
 
-     (bind ?formatos (create$ "Theodore Gericault" "Georges de La Tour"  "Pablo Picasso" "Salvador Dali"))
+     (bind ?formatos (create$ "Theodore Gericault" "Johannes_Vermeerr"  "Pablo Picasso" "Salvador Dali"))
 	(bind ?respuesta (pregunta_opcion_unica "¿Qué autor pinto 'La encajera'?" ?formatos))
 	(if (= ?respuesta 2) then (bind ?puntuacion (+ 1 ?puntuacion )))
      
@@ -1282,7 +1282,7 @@
 	(bind ?respuesta (pregunta_opcion_unica "¿Qué obra pertnece al Expresionsimo?" ?formatos))
 	(if (= ?respuesta 2) then (bind ?puntuacion (+ 1 ?puntuacion )))
 
-     (bind ?formatos (create$ " Un fusilamiento" "Un desalojo" "Un cumpleaños" "Un bombardeo" ))
+     (bind ?formatos (create$ "Un fusilamiento" "Un desalojo" "Un cumpleaños" "Un bombardeo" ))
 	(bind ?respuesta (pregunta_opcion_unica "¿A que hace referencia el Guernica?" ?formatos))
 	(if (= ?respuesta 4) then (bind ?puntuacion (+ 1 ?puntuacion )))
 
