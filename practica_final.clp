@@ -1224,8 +1224,8 @@
     (declare (salience 7))
     ?fact <- (datosVisita (Ndias_visita 0))
     =>
-    (bind ?pregunta "¿Cuantos dias va a durar la visita? [1-3]")
-    (bind ?respuesta (pregunta_numero_con_rango ?pregunta 1 3))
+    (bind ?pregunta "¿Cuantos dias va a durar la visita? [1-2]")
+    (bind ?respuesta (pregunta_numero_con_rango ?pregunta 1 2))
     (modify ?fact (Ndias_visita ?respuesta))
 )
 
@@ -1233,8 +1233,8 @@
     (declare (salience 6))
     ?fact <- (datosVisita (Duracion_visita 0))
     =>
-    (bind ?pregunta "¿Cuantas horas por dia va a durar la visita? [1-6]")
-    (bind ?respuesta (pregunta_numero_con_rango ?pregunta 1 6))
+    (bind ?pregunta "¿Cuantas horas por dia va a durar la visita? [1-4]")
+    (bind ?respuesta (pregunta_numero_con_rango ?pregunta 1 4))
     (modify ?fact (Duracion_visita ?respuesta))
 )
 
@@ -1254,7 +1254,7 @@
 	(bind ?respuesta (pregunta_opcion_unica "¿Conoces 'Las Meninas' de Velazquez?" ?formatos))
 	(if (= ?respuesta 1) then (bind ?puntuacion (+ 1 ?puntuacion )))
 
-     (bind ?formatos (create$ "Theodore Gericault" "Johannes_Vermeerr"  "Pablo Picasso" "Salvador Dali"))
+     (bind ?formatos (create$ "Theodore Gericault" "Johannes_Vermeer"  "Pablo Picasso" "Salvador Dali"))
 	(bind ?respuesta (pregunta_opcion_unica "¿Qué autor pinto 'La encajera'?" ?formatos))
 	(if (= ?respuesta 2) then (bind ?puntuacion (+ 1 ?puntuacion )))
      
@@ -1282,7 +1282,7 @@
 	(bind ?respuesta (pregunta_opcion_unica "¿Qué obra pertnece al Expresionsimo?" ?formatos))
 	(if (= ?respuesta 2) then (bind ?puntuacion (+ 1 ?puntuacion )))
 
-     (bind ?formatos (create$ "Un fusilamiento" "Un desalojo" "Un cumpleaños" "Un bombardeo" ))
+     (bind ?formatos (create$ " Un fusilamiento" "Un desalojo" "Un cumpleaños" "Un bombardeo" ))
 	(bind ?respuesta (pregunta_opcion_unica "¿A que hace referencia el Guernica?" ?formatos))
 	(if (= ?respuesta 4) then (bind ?puntuacion (+ 1 ?puntuacion )))
 
@@ -1526,7 +1526,7 @@
         
         ; Ajustar duración por complejidad
         (bind ?complejidad (send ?obra get-Complejidad))
-        (bind ?duracion (* ?duracion_base (/ ?complejidad 2)))
+        (bind ?duracion (* ?duracion_base (/ ?complejidad 1.5)))
         
         ; Ajustar por conocimiento
         (bind ?conocimiento (send ?visita get-Conocimiento_visita))
@@ -1545,7 +1545,7 @@
         
         ; Ajustar si hay niños
         (if (eq (send ?visita get-Hay_peques_visita) TRUE) 
-        then (bind ?duracion (* ?duracion 1.5)))
+        then (bind ?duracion (* ?duracion 2.0)))
         
         ; Obtener preferencias
         (bind $?preferencias (send ?visita get-vista_tiene_preferencia))
